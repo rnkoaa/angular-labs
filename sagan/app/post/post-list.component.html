@@ -1,0 +1,78 @@
+<div class="col-md-6">
+    <div class="row">
+        <!-- showing posts loading spinner -->
+        <spinner [visible]="postsLoading"></spinner>
+    </div>
+    <div class="blog-posts panel panel-default">
+        <div class="panel-heading">Posts</div>
+        <div class="panel-body">
+            <select class="form-control post-filter center text-center center-block" (change)="reloadPosts({ userId: u.value })"
+                #u>
+                <option value="0">Select User</option>
+                <option *ngFor="let user of users" value="{{ user.id }}">
+                    {{user.name}}
+                </option>
+            </select>
+            <div class="row">
+                <!-- showing posts loading spinner -->
+                <spinner [visible]="!postsLoadingComplete"></spinner>
+            </div>
+            <ul *ngIf="postsLoadingComplete" class="list-group posts">
+                <li class="list-group-item" *ngFor="let post of pagedPosts" [class.active]="selectedPost == post"
+                    (click)="viewSelectedPost(post)">
+                    {{post.title}}
+                </li>
+            </ul>
+            <nav *ngIf="postsLoadingComplete" class="text-center post-pagination">
+                <ul class="pagination pagination-centered">
+                    <li [class.disabled]="prevDisabled()">
+                        <a (click)="previous()" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li *ngFor="let page of pages" [class.active]="page == currentPage">
+                        <a (click)="changePage(page)">{{page}}</a>
+                    </li>
+                    <li [class.disabled]="nextDisabled()">
+                        <a (click)="next()" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 post-detail" *ngIf="selectedPost">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ selectedPost.title }}</div>
+        <div class="panel-body">
+            <div class="post-body">
+                {{ selectedPost.body }}
+            </div>
+            <!-- load comments and show spinner -->
+            <spinner [visible]="commentsLoading"></spinner>
+            <div class="post-comments" *ngIf="postComments && postComments.length > 0">
+                <div class="media" *ngFor="let postComment of postComments">
+                    <div class="media-left">
+                        <a href="#">
+                            <img src="{{postComment.imageUrl}}" class="media-object img-circle" alt="Sample Image">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ postComment.name}} <small><i>{{ postComment.email }}</i></small></h4>
+                        <p>{{ postComment.body }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6" *ngIf="!selectedPost">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            You Have to Select A Post
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  json_server:
+    container_name: 'json-server'
+    image: "clue/json-server"
+    ports: 
+      - '8080:80'
+    volumes:
+      - './db.json:/data/db.json'
+    networks:
+      - 'sagan-network'
+
+networks:
+  sagan-network:
+    driver: bridge

@@ -1,0 +1,19 @@
+<ul class="pagination">
+  <li (click)="gotoFirst(1, $event)" [class.disabled]="currentPage == 1">
+    <a href="#" title="Go to first page">&laquo;</a>
+  </li>
+  <ng-container *ngFor="let page of pages">
+    <li *ngIf="page.previous">
+      <a href="#" (click)="selectPage(page.value, $event)" [class.disabled]="currentPage == 1">&lsaquo;</a>
+    </li>
+    <li *ngIf="!page.previous && !page.next" [class.active]="page.value == currentPage" [class.disabled]="!page.enabled">
+      <a href="#" (click)="selectPage(page.value, $event)">{{page.display}}</a>
+    </li>
+    <li *ngIf="page.next">
+      <a href="#" (click)="selectPage(page.value, $event)" [class.disabled]="currentPage == totalPages">&rsaquo;</a>
+    </li>
+  </ng-container>
+  <li (click)="gotoLast(totalPages, $event)" [class.disabled]="currentPage == totalPages">
+    <a href="#" title="Go to last page">&raquo;</a>
+  </li>
+</ul>

@@ -1,0 +1,22 @@
+{
+  "name": "sagan",
+  "description": "A course project for angular2-jumpstart from udemy.com",
+  "main": "",
+  "authors": [
+    "rnkoaa <richard.agyei@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/rnkoaa/sagan",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}

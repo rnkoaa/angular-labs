@@ -1,0 +1,8 @@
+<div class="center">
+  <app-loader [loading]="loading"></app-loader>
+</div>
+<div class="row" *ngIf="!loading">
+  <div class="col s6">
+    <app-pokemon-entry [pokemon]="pokemon?.baseInfo" [withLink]="false"></app-pokemon-entry>
+  </div>
+</div>

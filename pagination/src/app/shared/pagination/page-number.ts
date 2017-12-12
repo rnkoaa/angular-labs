@@ -1,5 +1,5 @@
 export class PageNumber {
-  enabled: boolean = true;
+  enabled = true;
   previous: boolean;
   current: boolean;
   next: boolean;

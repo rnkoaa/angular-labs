@@ -1,0 +1,13 @@
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th *ngFor="let tableColumn of options.columns">{{ tableColumn.value }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of options.records">
+      <td *ngFor="let tableColumn of options.columns"> {{ getCellValue(row, tableColumn) }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -6,10 +6,10 @@ import { PageNumber } from './page-number';
   templateUrl: './pagination.component.html'
 })
 export class PaginationComponent implements OnInit, OnChanges {
-  @Input() offset: number = 0;
-  @Input() limit: number = 1;
-  @Input() size: number = 1;
-  @Input() range: number = 3
+  @Input() offset = 0;
+  @Input() limit = 1;
+  @Input() size = 1;
+  @Input() range = 3;
 
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -41,7 +41,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     this.totalPages = this.getTotalPages(limit, size);
 
     this.pages = Observable.range(-this.range, this.range * 2 + 1)
-      .map(offset => this.currentPage + offset)
+      .map(pageOffset => this.currentPage + pageOffset)
       .filter(page => this.isValidPageNumber(page, this.totalPages))
       .map(page => new PageNumber(page, `${page}`, false, false, false, true))
       .toArray();

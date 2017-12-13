@@ -2,13 +2,16 @@
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="#">Fixed navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#">Home
+          <span class="sr-only">(current)</span>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -25,7 +28,15 @@
 </nav>
 
 <div role="main" class="main-content container">
-  <app-data-table [options]="tableOptions" ></app-data-table>
+  <app-data-table [data]="tableOptions.records" [options]="tableOptions">
+    <app-data-table-column [value]="'username'" [header]="'Username'"></app-data-table-column>
+    <app-data-table-column [value]="'registered'" [header]="'Date Registered'"></app-data-table-column>
+    <app-data-table-column [value]="'role'" [header]="'Role'"></app-data-table-column>
+    <app-data-table-column [value]="'active'" [header]="'Active'"></app-data-table-column>
+    <app-data-table-column [value]="'status'" [header]="'Status'">
+      <ng-template #tableBodyTemplate let-column let-row="row">
+        <span class="badge badge-success">{{ row.status }}</span>
+      </ng-template>
+    </app-data-table-column>
+  </app-data-table>
 </div>
-
-

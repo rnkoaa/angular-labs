@@ -1,13 +1,24 @@
-
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th *ngFor="let tableColumn of options.columns">{{ tableColumn.value }}</th>
+      <th *ngFor="let column of columns">
+        <!-- {{column.header}} -->
+        <ng-container *ngIf="!column.headerTemplate">{{column.header}}</ng-container>
+        <ng-template *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
+          [ngTemplateOutletContext]="{ $implicit: { header: col.header } }"></ng-template>
+
+      </th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let row of options.records">
-      <td *ngFor="let tableColumn of options.columns"> {{ getCellValue(row, tableColumn) }}</td>
+  <tbody *ngFor="let row of data">
+    <tr>
+      <!-- <td *ngFor="let column of columns">{{row[column.value]}}</td> -->
+      <td *ngFor="let column of columns">
+        <ng-container *ngIf="!column.bodyTemplate">{{row[column.value]}}</ng-container>
+        <ng-template *ngIf="column.bodyTemplate" [ngTemplateOutlet]="column.bodyTemplate"
+          [ngTemplateOutletContext]="{ $implicit: { value: row[column.value] }, row: row }">
+        </ng-template>
+      </td>
     </tr>
   </tbody>
 </table>

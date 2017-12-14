@@ -164,12 +164,7 @@ export class DataTableComponent implements OnInit {
 
   onPageChange(offset) {
     this.offset = offset;
-    console.log(`Change to New Offset: ${this.offset} with limit: ${this.limit}`);
-    console.log(this.data.length);
-    console.log(JSON.stringify(this.data));
     this.displayData = this.data.slice(this.offset, this.offset + this.limit);
-    console.log(JSON.stringify(this.displayData));
-    // this.findAll(offset, this.limit);
   }
 
 }

@@ -10,7 +10,7 @@
       </th>
     </tr>
   </thead>
-  <tbody *ngFor="let row of data">
+  <tbody *ngFor="let row of displayData">
     <tr>
       <!-- <td *ngFor="let column of columns">{{row[column.value]}}</td> -->
       <td *ngFor="let column of columns">
@@ -22,3 +22,6 @@
     </tr>
   </tbody>
 </table>
+
+<app-data-table-pagination *ngIf="pagination" [offset]="offset" [limit]="limit" [size]="itemCount"
+  (pageChange)="onPageChange($event)"></app-data-table-pagination>

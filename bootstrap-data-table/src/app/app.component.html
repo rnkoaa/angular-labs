@@ -28,15 +28,18 @@
 </nav>
 
 <div role="main" class="main-content container">
-  <app-data-table [data]="tableOptions.records" [options]="tableOptions">
-    <app-data-table-column [value]="'username'" [header]="'Username'"></app-data-table-column>
-    <app-data-table-column [value]="'registered'" [header]="'Date Registered'"></app-data-table-column>
-    <app-data-table-column [value]="'role'" [header]="'Role'"></app-data-table-column>
+  <app-data-table [data]="tableOptions.records"
+  [options]="tableOptions"
+  [sortable]="true"
+  [pagination]="true" [limit]="10">
+    <app-data-table-column [value]="'name'" [header]="'Name'"></app-data-table-column>
+    <app-data-table-column [value]="'email'" [header]="'Email'"></app-data-table-column>
+    <app-data-table-column [value]="'phoneNumber'" [header]="'Phonenumber'"></app-data-table-column>
     <app-data-table-column [value]="'active'" [header]="'Active'"></app-data-table-column>
-    <app-data-table-column [value]="'status'" [header]="'Status'">
+    <!-- <app-data-table-column [value]="'status'" [header]="'Status'">
       <ng-template #tableBodyTemplate let-column let-row="row">
         <span class="badge badge-success">{{ row.status }}</span>
       </ng-template>
-    </app-data-table-column>
+    </app-data-table-column> -->
   </app-data-table>
 </div>

@@ -1,3 +1,4 @@
+import { CustomerSearchCriteria } from './customer-search-criteria';
 import { CustomerService } from './customer.service';
 import { Component, OnInit } from '@angular/core';
 import { Customer } from './customer';
@@ -13,11 +14,15 @@ export class AppComponent implements OnInit {
 
   constructor(private service: CustomerService) { }
 
-  getCustomers() {
-    this.customers = this.service.getCustomers();
+  getCustomers(criteria: CustomerSearchCriteria) {
+    this.customers = this.service.getCustomers(criteria);
+  }
+
+  onSorted($event) {
+    this.getCustomers($event);
   }
 
   ngOnInit() {
-    this.getCustomers();
+    this.getCustomers({ sortColumn: 'id', sortDirection: 'asc' });
   }
 }

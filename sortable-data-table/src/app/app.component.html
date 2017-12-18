@@ -1,10 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<table>
+<table appSortableTable (sorted)="onSorted($event)">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th appSortableColumn sortDirection="asc" columnName="Id">Id</th>
+      <th appSortableColumn columnName="firstname">First Name</th>
+      <th appSortableColumn columnName="lastname">Last Name</th>
+
     </tr>
   </thead>
   <tbody>
@@ -15,3 +16,4 @@
     </tr>
   </tbody>
 </table>
+

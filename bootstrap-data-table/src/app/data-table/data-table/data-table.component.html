@@ -8,7 +8,7 @@
           <ng-template *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
           [ngTemplateOutletContext]="{ $implicit: { header: col.header } }"></ng-template>
         </span>
-        <span *ngIf="column.sortable" class="float-right">
+        <span *ngIf="column.sortable" class="float-right column-sort-icon">
             <i class="fa fa-sort" *ngIf="column.sortable && column.sortDirection === ''"></i>
             <i class="fa fa-sort-asc" *ngIf="column.sortable && column.sortDirection === 'asc'"></i>
             <i class="fa fa-sort-desc" *ngIf="column.sortable && column.sortDirection === 'desc'"></i>

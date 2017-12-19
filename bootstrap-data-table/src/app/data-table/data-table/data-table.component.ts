@@ -31,8 +31,6 @@ export class DataTableComponent implements OnInit {
   @Input()
   private limit = 10;
 
-  // Reloading:
-
   _reloading = false;
 
   displayData: Array<any>;
@@ -75,9 +73,9 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  public getCellValue(row: any, column: ColumnDefinition): string {
-    return row[column.binding];
-  }
+  // public getCellValue(row: any, column: ColumnDefinition): string {
+  //   return row[column.binding];
+  // }
 
   onPageChange(offset) {
     this.offset = offset;

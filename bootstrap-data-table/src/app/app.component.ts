@@ -115,7 +115,8 @@ export class AppComponent implements OnInit {
     // ];
 
     this.tableOptions = <TableOptions>{
-      records: this.users
+      records: this.users,
+      config: <TableConfig>{}
     };
   }
 

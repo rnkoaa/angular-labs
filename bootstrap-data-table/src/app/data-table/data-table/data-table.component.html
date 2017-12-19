@@ -1,12 +1,19 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th *ngFor="let column of columns">
+      <th *ngFor="let column of columns" (click)="headerClicked(column, $event)" class="column-header"
+        [class.sortable]="column.sortable">
         <!-- {{column.header}} -->
         <ng-container *ngIf="!column.headerTemplate">{{column.header}}</ng-container>
         <ng-template *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
           [ngTemplateOutletContext]="{ $implicit: { header: col.header } }"></ng-template>
-
+        <!-- <span class="column-sort-icon" *ngIf="column.sortable">
+          <i class="fa fa-sort column-sortable-icon"></i>
+          <span  class="">
+            <i class="fa fa-sort-asc"></i>
+            <i class="fa fa-sort-desc"></i>
+          </span>
+        </span> -->
       </th>
     </tr>
   </thead>

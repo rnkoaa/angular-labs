@@ -16,6 +16,7 @@ import { TableOptions } from '../table-options';
 import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/observable/of';
+import { SorterService } from '../sorter.service';
 
 @Component({
   selector: 'app-data-table',
@@ -27,6 +28,7 @@ export class DataTableComponent implements OnInit {
   private _sortBy: string;
   private _sortAsc = true;
   private _limit = 10;
+
   // Reloading:
 
   _reloading = false;
@@ -55,7 +57,7 @@ export class DataTableComponent implements OnInit {
   @ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
 
   columns: DataTableColumnComponent[] = [];
-  constructor() {
+  constructor(private sorterService: SorterService) {
   }
 
   @Input()
@@ -146,13 +148,13 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(`Sortable: ${this.sortable}`);
+    this.sortAsc = true;
     this.data = this.options.records;
+
+    // console.log(this.sorterService.sort(this.data, 'name'));
     this.itemCount = this.options.records.length;
     if (this.pagination) {
-      console.log(`Pagination: ${this.pagination}`);
       this.displayData = this.data.slice(this.offset, this.limit);
-      // this.displayData = this.options.records;
     } else {
       this.displayData = this.data;
     }
@@ -165,6 +167,46 @@ export class DataTableComponent implements OnInit {
   onPageChange(offset) {
     this.offset = offset;
     this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+  }
+
+  headerClicked(column: DataTableColumnComponent, event) {
+    if (column.value && column.sortable) {
+      if (this.options.config.sortBy === undefined) {
+        this.options.config.sortBy = column.value;
+      }
+      if (this.options.config.sortBy === column.value) {
+        this.options.config.sortDirection = this.options.config.sortDirection === 'asc' ? 'desc' : 'asc';
+      }
+      this.options.config.sortBy = column.value;
+
+      this.displayData = this.sorterService.sort(this.data, this.options.config.sortBy, this.options.config.sortDirection);
+    }
+    // if (column.value && column.sortable) {
+    //   if (this.options.config.sortBy === column.value) {
+    //     this.options.config.sortDirection = this.options.config.sortDirection === 'asc' ? 'desc' : 'asc';
+    //   }
+    //   this.options.config.sortBy = column.value;
+
+    // this.sort(this.displayData, this.options.config.sortBy, this.options.config.sortDirection, isNumeric);
+    // const isNumeric = (column.filter && column.filter.indexOf("currency") != -1) || (column.isNumeric === true);
+    // Get the matching column
+    // const dtColumn = this.options.columns
+    // .filter((iColumn) => iColumn.value === this.options.config.sortBy)[0];
+    // const isNumeric = (dtColumn.filter && dtColumn.filter.indexOf("currency") != -1) || (dtColumn.isNumeric === true);
+    // this.sort(this.filteredData, this.options.config.sortBy, this.options.config.sortDirection, isNumeric);
+    // }
+  }
+
+  isSorting(name: string) {
+    return this.options.config.sortBy !== name && name !== '';
+  }
+
+  isSortAsc(name: string) {
+    return this.options.config.sortBy === name && this.options.config.sortDirection === 'asc';
+  }
+
+  isSortDesc(name: string) {
+    return this.options.config.sortBy === name && this.options.config.sortDirection === 'desc';
   }
 
 }

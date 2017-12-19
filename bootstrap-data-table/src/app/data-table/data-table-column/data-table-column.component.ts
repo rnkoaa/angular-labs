@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DataTableColumnComponent implements OnInit {
 
-  @Input() value;
+  @Input() name;
   @Input() header;
   @Input() sortable = false;
   @Input() sortDirection = '';
@@ -18,10 +18,7 @@ export class DataTableColumnComponent implements OnInit {
   @ContentChild('tableHeaderTemplate') headerTemplate: TemplateRef<any>;
   @ContentChild('tableBodyTemplate') bodyTemplate: TemplateRef<any>;
 
-
   private styleClassObject = {}; // for [ngClass]
-
-  private columnSortedSubscription: Subscription;
 
   constructor(table: DataTableComponent, private sortService: SortService) {
     table.addColumn(this);

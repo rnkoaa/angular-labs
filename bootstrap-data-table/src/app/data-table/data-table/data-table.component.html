@@ -19,9 +19,9 @@
   <tbody *ngFor="let row of displayData">
     <tr>
       <td *ngFor="let column of columns">
-        <ng-container *ngIf="!column.bodyTemplate">{{row[column.value]}}</ng-container>
+        <ng-container *ngIf="!column.bodyTemplate">{{row[column.name]}}</ng-container>
         <ng-template *ngIf="column.bodyTemplate" [ngTemplateOutlet]="column.bodyTemplate"
-          [ngTemplateOutletContext]="{ $implicit: { value: row[column.value] }, row: row }">
+          [ngTemplateOutletContext]="{ $implicit: { value: row[column.name] }, row: row }">
         </ng-template>
       </td>
     </tr>

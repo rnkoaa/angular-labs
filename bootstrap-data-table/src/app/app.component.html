@@ -30,12 +30,12 @@
 <div role="main" class="main-content container">
   <app-data-table [data]="tableOptions.records" [options]="tableOptions" [sortable]="true"
     [pagination]="true" [limit]="5">
-    <app-data-table-column [value]="'name'" [header]="'Name'" [sortable]="true">
+    <app-data-table-column [name]="'name'" [header]="'Name'" [sortable]="true">
     </app-data-table-column>
-    <app-data-table-column [value]="'email'" [header]="'Email'"></app-data-table-column>
-    <app-data-table-column [value]="'phoneNumber'" [header]="'Phonenumber'"></app-data-table-column>
-    <app-data-table-column [value]="'active'" [header]="'Active'" [sortable]="true"></app-data-table-column>
-    <app-data-table-column [value]="'date'" [header]="'Date'">
+    <app-data-table-column [name]="'email'" [header]="'Email'"></app-data-table-column>
+    <app-data-table-column [name]="'phoneNumber'" [header]="'Phonenumber'"></app-data-table-column>
+    <app-data-table-column [name]="'active'" [header]="'Active'" [sortable]="true"></app-data-table-column>
+    <app-data-table-column [name]="'date'" [header]="'Date'">
       <ng-template #tableBodyTemplate let-column let-row="row">
         <!-- <span class="badge badge-success">{{ row.date }}</span> -->
         <span>{{ row.date }}</span>

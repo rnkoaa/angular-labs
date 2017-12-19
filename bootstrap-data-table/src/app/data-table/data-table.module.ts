@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { DataTableComponent } from './data-table/data-table.component';
 import { DataTableColumnComponent } from './data-table-column/data-table-column.component';
 import { DataTablePaginationComponent } from './data-table-pagination/data-table-pagination.component';
-import { SorterService } from './sorter.service';
 
 @NgModule({
   imports: [
@@ -14,7 +13,7 @@ import { SorterService } from './sorter.service';
     DataTableComponent,
     DataTableColumnComponent
   ],
-  providers: [SortService, SorterService],
+  providers: [SortService],
   declarations: [DataTableComponent,
     DataTableColumnComponent,
     DataTablePaginationComponent]

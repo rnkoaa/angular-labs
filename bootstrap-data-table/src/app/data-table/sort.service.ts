@@ -6,13 +6,28 @@ import { Subject } from 'rxjs/Subject';
 export class SortService {
 
   constructor() { }
+  sort(items: Array<any>, key: string, direction = 'asc'): Array<any> {
+    return items.sort((item1, item2) => {
+      return this.compare(item1, item2, key, direction);
+    });
+  }
 
-  private columnSortedSource = new Subject<ColumnSortEvent>();
 
-  columnSorted$ = this.columnSortedSource.asObservable();
+  private compare(item1: any, item2: any, key: string, order: string): number {
+    if (!item1.hasOwnProperty(key) || !item2.hasOwnProperty(key)) {
+      return 0;
+    }
 
-  columnSorted(event: ColumnSortEvent) {
-      this.columnSortedSource.next(event);
+    const varA = (typeof item1[key] === 'string') ? item1[key].toUpperCase() : item1[key];
+    const varB = (typeof item2[key] === 'string') ? item2[key].toUpperCase() : item2[key];
+
+    let comparison = 0;
+    if (varA > varB) {
+      comparison = 1;
+    } else if (varA < varB) {
+      comparison = -1;
+    }
+    return (order === 'desc') ? (comparison * -1) : comparison;
   }
 
 }

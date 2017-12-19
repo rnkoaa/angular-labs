@@ -57,6 +57,7 @@ export class DataTableComponent implements OnInit {
   @ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
 
   columns: DataTableColumnComponent[] = [];
+
   constructor(private sortService: SortService) {
   }
 
@@ -65,7 +66,6 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.sortAsc = true;
     this.data = this.options.records;
     this.itemCount = this.options.records.length;
     if (this.pagination) {

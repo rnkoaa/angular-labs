@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class DataTableColumnComponent implements OnInit {
 
   @Input() name;
+  @Input() width: number;
   @Input() header;
   @Input() sortable = false;
   @Input() sortDirection = '';

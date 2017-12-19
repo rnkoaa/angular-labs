@@ -16,9 +16,9 @@
       </th>
     </tr>
   </thead>
-  <tbody *ngFor="let row of displayData">
-    <tr>
-      <td *ngFor="let column of columns">
+  <tbody>
+    <tr *ngFor="let row of displayData">
+      <td *ngFor="let column of columns" [attr.width]="column.width > 0 ? column.width : 0">
         <ng-container *ngIf="!column.bodyTemplate">{{row[column.name]}}</ng-container>
         <ng-template *ngIf="column.bodyTemplate" [ngTemplateOutlet]="column.bodyTemplate"
           [ngTemplateOutletContext]="{ $implicit: { value: row[column.name] }, row: row }">

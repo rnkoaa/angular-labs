@@ -28,15 +28,7 @@ export class DataTableColumnComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(`header: ${this.header} with sortable: ${this.sortable}`);
-    // subscribe to sort changes so we can react when other columns are sorted
-    // this.columnSortedSubscription = this.sortService.columnSorted$.subscribe(event => {
-    //   // reset this column's sort direction to hide the sort icons
-    //   if (this.header !== event.column) {
-    //     console.log(`${this.header} changing to empty`);
-    //     this.sortDirection = '';
-    //   }
-    // });
+
   }
 
 }

@@ -10,19 +10,9 @@
         </span>
         <span *ngIf="column.sortable" class="float-right">
             <i class="fa fa-sort" *ngIf="column.sortable && column.sortDirection === ''"></i>
-            <i class="fa fa-sort-asc"></i>
-            <i class="fa fa-sort-desc"></i>
+            <i class="fa fa-sort-asc" *ngIf="column.sortable && column.sortDirection === 'asc'"></i>
+            <i class="fa fa-sort-desc" *ngIf="column.sortable && column.sortDirection === 'desc'"></i>
           </span>
-        <!-- <ng-container *ngIf="!column.headerTemplate">{{column.header}}</ng-container>
-        <ng-template *ngIf="column.headerTemplate" [ngTemplateOutlet]="column.headerTemplate"
-          [ngTemplateOutletContext]="{ $implicit: { header: col.header } }"></ng-template> -->
-        <!-- <span class="column-sort-icon" *ngIf="column.sortable">
-          <i class="fa fa-sort column-sortable-icon"></i>
-          <span  class="">
-            <i class="fa fa-sort-asc"></i>
-            <i class="fa fa-sort-desc"></i>
-          </span>
-        </span> -->
       </th>
     </tr>
   </thead>

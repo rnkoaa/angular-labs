@@ -33,8 +33,6 @@ export class DataTableComponent implements OnInit {
 
   _reloading = false;
 
-  _scheduledReload = null;
-
   displayData: Array<any>;
   @Input() options: TableOptions;
   @Input() data: Array<any>;
@@ -67,7 +65,6 @@ export class DataTableComponent implements OnInit {
 
   set sortBy(value) {
     this._sortBy = value;
-    this._triggerReload();
   }
 
   @Input()
@@ -77,7 +74,6 @@ export class DataTableComponent implements OnInit {
 
   set sortAsc(value) {
     this._sortAsc = value;
-    this._triggerReload();
   }
 
   @Input()
@@ -87,7 +83,6 @@ export class DataTableComponent implements OnInit {
 
   set limit(value) {
     this._limit = value;
-    this._triggerReload();
   }
 
   // calculated property:
@@ -105,44 +100,6 @@ export class DataTableComponent implements OnInit {
     return Math.ceil(this.itemCount / this.limit);
   }
 
-  // setting multiple observable properties simultaneously
-
-  sort(sortBy: string, asc: boolean) {
-    this.sortBy = sortBy;
-    this.sortAsc = asc;
-  }
-
-  // for avoiding cascading reloads if multiple params are set at once:
-  _triggerReload() {
-    if (this._scheduledReload) {
-      clearTimeout(this._scheduledReload);
-    }
-    this._scheduledReload = setTimeout(() => {
-      this.reloadItems();
-    });
-  }
-
-  reloadItems() {
-    this._reloading = true;
-    // this.reload.emit(this._getRemoteParameters());
-  }
-
-  // functions:
-  private _getRemoteParameters(): any {
-    const params = <any>{};
-
-    if (this.sortBy) {
-      params.sortBy = this.sortBy;
-      params.sortAsc = this.sortAsc;
-    }
-    if (this.pagination) {
-      params.offset = this.offset;
-      params.limit = this.limit;
-    }
-    return params;
-  }
-
-
   addColumn(dataTableColumn: DataTableColumnComponent) {
     this.columns.push(dataTableColumn);
   }
@@ -150,7 +107,6 @@ export class DataTableComponent implements OnInit {
   ngOnInit() {
     this.sortAsc = true;
     this.data = this.options.records;
-
     this.itemCount = this.options.records.length;
     if (this.pagination) {
       this.displayData = this.data.slice(this.offset, this.limit);
@@ -183,27 +139,13 @@ export class DataTableComponent implements OnInit {
       this.displayData = this.data.slice(this.offset, this.offset + this.limit);
 
       this.columns.forEach(col => {
-        if (col.sortable) {
-          col.sortDirection = '';
+        if (col.sortable && col.value === column.value) {
+          col.sortDirection = this.options.config.sortDirection;
         }
-
-        if (col.value === column.value) {
-          col.sortDirection = this.options.config.sortBy;
+        if (col.sortable && col.value !== column.value) {
+          col.sortDirection = '';
         }
       });
     }
   }
-
-  isSorting(name: string) {
-    return this.options.config.sortBy !== name && name !== '';
-  }
-
-  isSortAsc(name: string) {
-    return this.options.config.sortBy === name && this.options.config.sortDirection === 'asc';
-  }
-
-  isSortDesc(name: string) {
-    return this.options.config.sortBy === name && this.options.config.sortDirection === 'desc';
-  }
-
 }

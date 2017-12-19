@@ -151,7 +151,6 @@ export class DataTableComponent implements OnInit {
     this.sortAsc = true;
     this.data = this.options.records;
 
-    // console.log(this.sorterService.sort(this.data, 'name'));
     this.itemCount = this.options.records.length;
     if (this.pagination) {
       this.displayData = this.data.slice(this.offset, this.limit);
@@ -174,27 +173,25 @@ export class DataTableComponent implements OnInit {
       if (this.options.config.sortBy === undefined) {
         this.options.config.sortBy = column.value;
       }
+
       if (this.options.config.sortBy === column.value) {
         this.options.config.sortDirection = this.options.config.sortDirection === 'asc' ? 'desc' : 'asc';
       }
       this.options.config.sortBy = column.value;
 
-      this.displayData = this.sorterService.sort(this.data, this.options.config.sortBy, this.options.config.sortDirection);
-    }
-    // if (column.value && column.sortable) {
-    //   if (this.options.config.sortBy === column.value) {
-    //     this.options.config.sortDirection = this.options.config.sortDirection === 'asc' ? 'desc' : 'asc';
-    //   }
-    //   this.options.config.sortBy = column.value;
+      this.data = this.sorterService.sort(this.data, this.options.config.sortBy, this.options.config.sortDirection);
+      this.displayData = this.data.slice(this.offset, this.offset + this.limit);
 
-    // this.sort(this.displayData, this.options.config.sortBy, this.options.config.sortDirection, isNumeric);
-    // const isNumeric = (column.filter && column.filter.indexOf("currency") != -1) || (column.isNumeric === true);
-    // Get the matching column
-    // const dtColumn = this.options.columns
-    // .filter((iColumn) => iColumn.value === this.options.config.sortBy)[0];
-    // const isNumeric = (dtColumn.filter && dtColumn.filter.indexOf("currency") != -1) || (dtColumn.isNumeric === true);
-    // this.sort(this.filteredData, this.options.config.sortBy, this.options.config.sortDirection, isNumeric);
-    // }
+      this.columns.forEach(col => {
+        if (col.sortable) {
+          col.sortDirection = '';
+        }
+
+        if (col.value === column.value) {
+          col.sortDirection = this.options.config.sortBy;
+        }
+      });
+    }
   }
 
   isSorting(name: string) {

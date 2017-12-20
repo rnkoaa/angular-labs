@@ -31,11 +31,16 @@
   <div class="card">
     <div class="card-header">
       <span class="float-left">
-          <i class="fa fa-align-justify"></i> Bordered Table
+        <i class="fa fa-align-justify"></i> Bordered Table
       </span>
-      <span class="float-right table-config-icon">
-        <i class="fa fa-wrench"></i>
-      </span>
+      <div ngbDropdown placement="bottom-right" class="float-right">
+        <span class="table-config-icon" id="tableConfigDropdown" ngbDropdownToggle>
+          <i class="fa fa-wrench"></i>
+        </span>
+        <div ngbDropdownMenu aria-labelledby="tableConfigDropdown">
+          <button class="dropdown-item">Items Per Page</button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <app-data-table [data]="tableOptions.records" [options]="tableOptions" [sortable]="true"

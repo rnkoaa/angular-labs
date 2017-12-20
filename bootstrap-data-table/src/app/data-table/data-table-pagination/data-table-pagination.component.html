@@ -1,6 +1,6 @@
 <nav class="float-right">
   <ul class="pagination">
-    <li (click)="selectPage(1, $event)" [class.disabled]="currentPage == 1" class="page-item">
+    <li (click)="selectPage(1, $event)" [class.disabled]="currentPage <= 1 " class="page-item">
       <a href="#" class="page-link" title="Go to first page" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
@@ -28,7 +28,7 @@
         <span aria-hidden="true" aria-label="Next">&rsaquo;</span>
       </a>
     </li>
-    <li (click)="selectPage(totalPages, $event)" [class.disabled]="currentPage == totalPages"
+    <li (click)="selectPage(totalPages, $event)" [class.disabled]="currentPage >= totalPages"
       class="page-item">
       <a href="" title="Go to last page" class="page-link">
         <span aria-hidden="true" aria-label="Last">&raquo;</span>

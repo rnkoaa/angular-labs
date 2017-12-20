@@ -16,6 +16,12 @@ import { TableOptions } from '../table-options';
 import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/take';
+
+
 import { SortService } from '../sort.service';
 
 @Component({
@@ -25,6 +31,11 @@ import { SortService } from '../sort.service';
 })
 export class DataTableComponent implements OnInit {
 
+
+  displayData: Array<any>;
+  displayData$: Observable<Array<any>>;
+  osbservableData$: Observable<Array<any>>;
+  _subscription: Subscription;
   private _sortBy: string;
   private _sortAsc = true;
 
@@ -33,7 +44,6 @@ export class DataTableComponent implements OnInit {
 
   _reloading = false;
 
-  displayData: Array<any>;
   @Input() options: TableOptions;
   @Input() data: Array<any>;
   @Input() sortable = false;
@@ -65,21 +75,33 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.options.records;
+    this.osbservableData$ = Observable.of(this.data);
     this.itemCount = this.options.records.length;
+
     if (this.pagination) {
-      this.displayData = this.data.slice(this.offset, this.limit);
+      this.osbservableData$
+        .subscribe(items => {
+          this.displayData = items.slice(this.offset, this.offset + this.limit);
+        });
     } else {
-      this.displayData = this.data;
+      // this.displayData$ = this.osbservableData$.toArray();
+      this.osbservableData$
+        .subscribe(items => {
+          this.displayData = items;
+        });
     }
   }
 
-  // public getCellValue(row: any, column: ColumnDefinition): string {
-  //   return row[column.binding];
-  // }
-
   onPageChange(offset) {
     this.offset = offset;
-    this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+    console.log(`Offset => ${this.offset}`);
+
+
+    this.osbservableData$
+      .subscribe(items => {
+        console.log(`Items Length ${items.length}`);
+        this.displayData = items.slice(this.offset, this.offset + this.limit);
+      });
   }
 
   headerClicked(column: DataTableColumnComponent, event) {
@@ -93,8 +115,26 @@ export class DataTableComponent implements OnInit {
       }
       this.options.config.sortBy = column.name;
 
-      this.data = this.sortService.sort(this.data, this.options.config.sortBy, this.options.config.sortDirection);
-      this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+      this.osbservableData$ = this.osbservableData$
+        .map(itemArray => {
+          console.log(itemArray.length);
+          return this.sortService.sort(itemArray, this.options.config.sortBy, this.options.config.sortDirection);
+        });
+
+      this.osbservableData$
+        .subscribe(items => {
+          console.log(items.length);
+          this.displayData = items.slice(this.offset, this.offset + this.limit);
+        });
+
+
+      //   return this.sortService.sort(items, this.options.config.sortBy, this.options.config.sortDirection);
+      // });
+
+      // this.displayData$ = this.osbservableData$
+      //   .skip(this.offset)
+      //   .take(this.limit)
+      //   .toArray();
 
       this.columns.forEach(col => {
         if (col.sortable && col.name === column.name) {

@@ -28,35 +28,18 @@
 </nav>
 
 <div role="main" class="main-content container">
-  <div class="card">
-    <div class="card-header">
-      <span class="float-left">
-        <i class="fa fa-align-justify"></i> Bordered Table
-      </span>
-      <div ngbDropdown placement="bottom-right" class="float-right">
-        <span class="table-config-icon" id="tableConfigDropdown" ngbDropdownToggle>
-          <i class="fa fa-wrench"></i>
-        </span>
-        <div ngbDropdownMenu aria-labelledby="tableConfigDropdown">
-          <button class="dropdown-item">Items Per Page</button>
-        </div>
-      </div>
-    </div>
-    <div class="card-body">
-      <app-data-table [data]="tableOptions.records" [options]="tableOptions" [sortable]="true"
-        [pagination]="true" [limit]="5">
-        <app-data-table-column [name]="'name'" [header]="'Name'" [width]="260" [sortable]="true">
-        </app-data-table-column>
-        <app-data-table-column [name]="'email'" [header]="'Email'"></app-data-table-column>
-        <app-data-table-column [name]="'phoneNumber'" [header]="'Phonenumber'"></app-data-table-column>
-        <app-data-table-column [name]="'active'" [header]="'Active'" [width]="100" [sortable]="true"></app-data-table-column>
-        <app-data-table-column [name]="'date'" [header]="'Date'">
-          <ng-template #tableBodyTemplate let-column let-row="row">
-            <!-- <span class="badge badge-success">{{ row.date }}</span> -->
-            <span>{{ row.date }}</span>
-          </ng-template>
-        </app-data-table-column>
-      </app-data-table>
-    </div>
-  </div>
+  <app-data-table [data]="tableOptions.records" [options]="tableOptions" [sortable]="true"
+    [pagination]="true" [limit]="5">
+    <app-data-table-column [name]="'name'" [header]="'Name'" [width]="260" [sortable]="true">
+    </app-data-table-column>
+    <app-data-table-column [name]="'email'" [header]="'Email'"></app-data-table-column>
+    <app-data-table-column [name]="'phoneNumber'" [header]="'Phonenumber'"></app-data-table-column>
+    <app-data-table-column [name]="'active'" [header]="'Active'" [width]="100" [sortable]="true"></app-data-table-column>
+    <app-data-table-column [name]="'date'" [header]="'Date'">
+      <ng-template #tableBodyTemplate let-column let-row="row">
+        <!-- <span class="badge badge-success">{{ row.date }}</span> -->
+        <span>{{ row.date }}</span>
+      </ng-template>
+    </app-data-table-column>
+  </app-data-table>
 </div>

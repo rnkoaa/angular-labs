@@ -35,11 +35,9 @@ export class DataTablePaginationComponent implements OnInit, OnChanges {
   selectPage(page: number, event) {
     this.cancelEvent(event);
     if (this.isValidPageNumber(page, this.totalPages)) {
-
-       if (page >= 1 && page <= this.totalPages) {
-        console.log(`This is page changing current page: ${page} Total Pages ${this.totalPages}`);
+      if (page >= 1 && page <= this.totalPages) {
         this.pageChange.emit((page - 1) * this.limit);
-       }
+      }
     }
   }
 

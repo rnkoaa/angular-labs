@@ -1,3 +1,4 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableColumnComponent } from '../data-table-column/data-table-column.component';
 import { ColumnDefinition } from '../column-definition';
 import {
@@ -23,6 +24,7 @@ import 'rxjs/add/operator/take';
 
 
 import { SortService } from '../sort.service';
+import { ItemPerPageComponent } from './item-per-page.component';
 
 @Component({
   selector: 'app-data-table',
@@ -66,7 +68,7 @@ export class DataTableComponent implements OnInit {
 
   columns: DataTableColumnComponent[] = [];
 
-  constructor(private sortService: SortService) {
+  constructor(private sortService: SortService, private modalService: NgbModal) {
   }
 
   addColumn(dataTableColumn: DataTableColumnComponent) {
@@ -104,6 +106,12 @@ export class DataTableComponent implements OnInit {
       });
   }
 
+  changeItemsPerPage($event) {
+    console.log('change Items Per Page');
+    const modalRef = this.modalService.open(ItemPerPageComponent);
+    modalRef.componentInstance.name = 'World';
+  }
+
   headerClicked(column: DataTableColumnComponent, event) {
     if (column.name && column.sortable) {
       if (this.options.config.sortBy === undefined) {
@@ -126,15 +134,6 @@ export class DataTableComponent implements OnInit {
           console.log(items.length);
           this.displayData = items.slice(this.offset, this.offset + this.limit);
         });
-
-
-      //   return this.sortService.sort(items, this.options.config.sortBy, this.options.config.sortDirection);
-      // });
-
-      // this.displayData$ = this.osbservableData$
-      //   .skip(this.offset)
-      //   .take(this.limit)
-      //   .toArray();
 
       this.columns.forEach(col => {
         if (col.sortable && col.name === column.name) {

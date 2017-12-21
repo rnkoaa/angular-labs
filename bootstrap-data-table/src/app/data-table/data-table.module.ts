@@ -1,3 +1,5 @@
+import { ItemsPerPageService } from './data-table/items-per-page.service';
+import { FormsModule } from '@angular/forms';
 import { SortService } from './sort.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +12,7 @@ import { ItemPerPageComponent } from './data-table/item-per-page.component';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     NgbModule
   ],
   entryComponents: [
@@ -19,7 +22,8 @@ import { ItemPerPageComponent } from './data-table/item-per-page.component';
     DataTableComponent,
     DataTableColumnComponent
   ],
-  providers: [SortService],
+  providers: [SortService,
+    ItemsPerPageService],
   declarations: [
     DataTableComponent,
     DataTableColumnComponent,

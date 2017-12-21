@@ -1,6 +1,7 @@
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, Input } from '@angular/core';
 import { MODAL_TEMPLATE } from './items-per-page.template';
+import { ItemsPerPageService } from './items-per-page.service';
 
 @Component({
   selector: 'app-item-per-page',
@@ -12,7 +13,14 @@ import { MODAL_TEMPLATE } from './items-per-page.template';
   `]
 })
 export class ItemPerPageComponent {
-  @Input() name;
+  @Input() itemsPerPage;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal,
+    private itemsPerPageService: ItemsPerPageService) { }
+
+  onSubmit() {
+    console.log(`Submitting Form. With Value: ${this.itemsPerPage}`);
+    this.activeModal.dismiss('dismiss after submitting.');
+    this.itemsPerPageService.itemCountUpdated(this.itemsPerPage);
+  }
 }

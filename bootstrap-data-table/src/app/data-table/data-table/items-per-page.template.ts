@@ -7,12 +7,12 @@ export const MODAL_TEMPLATE =
       </button>
     </div>
     <div class="modal-body items-per-page-body">
-    <form action="" class="form-horizontal" method="post">
+    <form action="" class="form-horizontal" (ngSubmit)="onSubmit()">
       <div class="form-group row">
-        <label class="col-md-3 col-form-label" for="hf-email">Email</label>
-        <div class="col-md-9">
-          <input class="form-control" id="hf-email" name="hf-email" placeholder="Enter Email.." type="email">
-          <span class="help-block">Please enter your email</span>
+        <label class="col-md-4 col-form-label" for="hf-items-per-page">Items Per Page</label>
+        <div class="col-md-4">
+          <input class="form-control" [(ngModel)]="itemsPerPage"
+          id="hf-items-per-page" name="hf-items-per-page" type="number">
         </div>
       </div>
       <div class="form-group form-actions">

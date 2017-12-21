@@ -8,6 +8,7 @@ import {
   ContentChild,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   TemplateRef,
@@ -25,13 +26,14 @@ import 'rxjs/add/operator/take';
 
 import { SortService } from '../sort.service';
 import { ItemPerPageComponent } from './item-per-page.component';
+import { ItemsPerPageService } from './items-per-page.service';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.css']
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements OnInit, OnDestroy {
 
 
   displayData: Array<any>;
@@ -66,9 +68,13 @@ export class DataTableComponent implements OnInit {
 
   @ContentChild('dataTableExpand') expandTemplate: TemplateRef<any>;
 
+  itemPerPageSubscription: Subscription;
+
   columns: DataTableColumnComponent[] = [];
 
-  constructor(private sortService: SortService, private modalService: NgbModal) {
+  constructor(private sortService: SortService,
+    private itemsPerPageService: ItemsPerPageService,
+    private modalService: NgbModal) {
   }
 
   addColumn(dataTableColumn: DataTableColumnComponent) {
@@ -79,6 +85,16 @@ export class DataTableComponent implements OnInit {
     this.data = this.options.records;
     this.osbservableData$ = Observable.of(this.data);
     this.itemCount = this.options.records.length;
+
+    this.itemPerPageSubscription = this.itemsPerPageService.itemCountUpdated$
+      .subscribe(itemPerPage => {
+        // console.log(`Updated Items Per Page: ${itemPerPage}`);
+        this.limit = itemPerPage;
+        this.osbservableData$
+          .subscribe(items => {
+            this.displayData = items.slice(this.offset, this.offset + this.limit);
+          });
+      });
 
     if (this.pagination) {
       this.osbservableData$
@@ -109,7 +125,7 @@ export class DataTableComponent implements OnInit {
   changeItemsPerPage($event) {
     console.log('change Items Per Page');
     const modalRef = this.modalService.open(ItemPerPageComponent);
-    modalRef.componentInstance.name = 'World';
+    modalRef.componentInstance.itemsPerPage = this.limit;
   }
 
   headerClicked(column: DataTableColumnComponent, event) {
@@ -144,5 +160,10 @@ export class DataTableComponent implements OnInit {
         }
       });
     }
+  }
+
+  public ngOnDestroy(): void {
+    // throw new Error('Not implemented yet.');
+    this.itemPerPageSubscription.unsubscribe();
   }
 }

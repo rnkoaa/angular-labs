@@ -19,7 +19,6 @@ export class ItemPerPageComponent {
     private itemsPerPageService: ItemsPerPageService) { }
 
   onSubmit() {
-    console.log(`Submitting Form. With Value: ${this.itemsPerPage}`);
     this.activeModal.dismiss('dismiss after submitting.');
     this.itemsPerPageService.itemCountUpdated(this.itemsPerPage);
   }

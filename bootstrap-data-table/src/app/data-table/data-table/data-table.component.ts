@@ -2,16 +2,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableColumnComponent } from '../data-table-column/data-table-column.component';
 import { ColumnDefinition } from '../column-definition';
 import {
-  ApplicationRef,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  TemplateRef,
+    ApplicationRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    TemplateRef,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TableOptions } from '../table-options';
@@ -31,11 +32,10 @@ import { ItemsPerPageService } from './items-per-page.service';
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.css']
+  styleUrls: ['./data-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit, OnDestroy {
-
-
   displayData: Array<any>;
   displayData$: Observable<Array<any>>;
   osbservableData$: Observable<Array<any>>;
@@ -74,7 +74,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   constructor(private sortService: SortService,
     private itemsPerPageService: ItemsPerPageService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private cd: ChangeDetectorRef) {
   }
 
   addColumn(dataTableColumn: DataTableColumnComponent) {
@@ -88,11 +89,11 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
     this.itemPerPageSubscription = this.itemsPerPageService.itemCountUpdated$
       .subscribe(itemPerPage => {
-        // console.log(`Updated Items Per Page: ${itemPerPage}`);
         this.limit = itemPerPage;
         this.osbservableData$
           .subscribe(items => {
             this.displayData = items.slice(this.offset, this.offset + this.limit);
+            this.cd.markForCheck();
           });
       });
 
@@ -102,7 +103,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
           this.displayData = items.slice(this.offset, this.offset + this.limit);
         });
     } else {
-      // this.displayData$ = this.osbservableData$.toArray();
       this.osbservableData$
         .subscribe(items => {
           this.displayData = items;

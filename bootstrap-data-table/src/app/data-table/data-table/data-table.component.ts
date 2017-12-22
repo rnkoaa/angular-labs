@@ -1,31 +1,31 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataTableColumnComponent } from '../data-table-column/data-table-column.component';
-import { ColumnDefinition } from '../column-definition';
-import {
-    ApplicationRef,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    TemplateRef,
-} from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { TableOptions } from '../table-options';
-import { Subscription } from 'rxjs/Subscription';
-
-import 'rxjs/add/observable/of';
+import { DataTableSearchService } from './data-table-search.service';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/debounceTime'
+import 'rxjs/add/operator/distinctUntilChanged'
 
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
+import { DataTableColumnComponent } from '../data-table-column/data-table-column.component';
 import { SortService } from '../sort.service';
+import { TableOptions } from '../table-options';
 import { ItemPerPageComponent } from './item-per-page.component';
 import { ItemsPerPageService } from './items-per-page.service';
 
@@ -36,6 +36,7 @@ import { ItemsPerPageService } from './items-per-page.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit, OnDestroy {
+
   displayData: Array<any>;
   displayData$: Observable<Array<any>>;
   osbservableData$: Observable<Array<any>>;
@@ -74,6 +75,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   constructor(private sortService: SortService,
     private itemsPerPageService: ItemsPerPageService,
+    private datatableSearchService: DataTableSearchService,
     private modalService: NgbModal,
     private cd: ChangeDetectorRef) {
   }
@@ -87,15 +89,18 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.osbservableData$ = Observable.of(this.data);
     this.itemCount = this.options.records.length;
 
-    this.itemPerPageSubscription = this.itemsPerPageService.itemCountUpdated$
-      .subscribe(itemPerPage => {
+    // when the items per page is changed, we need to reload data.
+    this.itemsPerPageService.itemCountUpdated$
+      .switchMap(itemPerPage => {
         this.limit = itemPerPage;
-        this.osbservableData$
-          .subscribe(items => {
-            this.displayData = items.slice(this.offset, this.offset + this.limit);
-            this.cd.markForCheck();
-          });
+        return this.osbservableData$;
+      })
+      .subscribe(items => {
+        this.displayData = items.slice(this.offset, this.offset + this.limit);
+        this.cd.markForCheck();
       });
+
+    this.registerFilter();
 
     if (this.pagination) {
       this.osbservableData$
@@ -110,11 +115,25 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  registerFilter(): any {
+    // throw new Error("Method not implemented.");
+    // when the search term is updated
+    this.datatableSearchService.searchTerm$
+      .debounceTime(400)
+      .distinctUntilChanged()
+      // .switchMap(term => {
+      //   return this.osbservableData$
+      //   .filter(arrItem => )
+      // })
+      .subscribe(term => {
+        console.log('Search Term => ', term);
+      });
+
+  }
+
+  // page change handler.
   onPageChange(offset) {
     this.offset = offset;
-    console.log(`Offset => ${this.offset}`);
-
-
     this.osbservableData$
       .subscribe(items => {
         console.log(`Items Length ${items.length}`);
@@ -122,8 +141,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
       });
   }
 
+  // open the items per page modal window.
   changeItemsPerPage($event) {
-    console.log('change Items Per Page');
     const modalRef = this.modalService.open(ItemPerPageComponent);
     modalRef.componentInstance.itemsPerPage = this.limit;
   }

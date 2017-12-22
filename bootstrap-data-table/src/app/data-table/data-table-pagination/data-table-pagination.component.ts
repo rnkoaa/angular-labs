@@ -1,12 +1,12 @@
-import { DataTableComponent } from '../data-table/data-table.component';
-import { Component, EventEmitter, forwardRef, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { PageNumber } from './page-number';
-
 import 'rxjs/add/observable/range';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toArray';
+
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { PageNumber } from './page-number';
 
 @Component({
   selector: 'app-data-table-pagination',

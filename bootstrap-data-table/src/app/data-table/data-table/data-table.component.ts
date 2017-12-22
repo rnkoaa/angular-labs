@@ -1,31 +1,32 @@
-import { DataTableSearchService } from './data-table-search.service';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  TemplateRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    TemplateRef,
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { DataTableColumnComponent } from '../data-table-column/data-table-column.component';
+import { FuseSearchService } from '../fuse-search.service';
 import { SortService } from '../sort.service';
 import { TableOptions } from '../table-options';
+import { DataTableSearchService } from './data-table-search.service';
 import { ItemPerPageComponent } from './item-per-page.component';
 import { ItemsPerPageService } from './items-per-page.service';
 
@@ -77,6 +78,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     private itemsPerPageService: ItemsPerPageService,
     private datatableSearchService: DataTableSearchService,
     private modalService: NgbModal,
+    private fuseSearchService: FuseSearchService,
     private cd: ChangeDetectorRef) {
   }
 
@@ -127,10 +129,32 @@ export class DataTableComponent implements OnInit, OnDestroy {
       // })
       .subscribe(term => {
         console.log('Search Term => ', term);
-        this.fuzzyService.searchObservable(this.osbservableData$, term)
-          .subscribe(results => {
-            // console.log(results);
-          });
+        const opts = {
+          shouldSort: true,
+          tokenize: true,
+          matchAllTokens: true,
+          includeMatches: true,
+          threshold: 0.3,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 3,
+          keys: [
+            'name',
+            'email',
+            'jobTitle'
+          ]
+        };
+
+        //  const results = this.fuzzySearchService.search("yahoo", response, opts)
+        //  console.log(results);
+        const result = this.fuseSearchService.search(this.data, term, opts);
+        console.log(result);
+
+        // this.fuzzyService.searchObservable(this.osbservableData$, term)
+        //   .subscribe(results => {
+        //     // console.log(results);
+        //   });
       });
 
 

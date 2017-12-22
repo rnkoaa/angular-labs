@@ -12,13 +12,14 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { ItemPerPageComponent } from './data-table/item-per-page.component';
 import { ItemsPerPageService } from './data-table/items-per-page.service';
 import { SortService } from './sort.service';
+import { FuseSearchService } from './fuse-search.service';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgbModule
-    ],
+  ],
   entryComponents: [
     ItemPerPageComponent
   ],
@@ -26,15 +27,19 @@ import { SortService } from './sort.service';
     DataTableComponent,
     DataTableColumnComponent
   ],
-  providers: [SortService,
+  providers: [
+    SortService,
     ItemsPerPageService,
-    DataTableSearchService],
+    DataTableSearchService,
+    FuseSearchService
+  ],
   declarations: [
     DataTableComponent,
     DataTableColumnComponent,
     DataTableSearchComponent,
     ItemPerPageComponent,
     DataTableEntriesComponent,
-    DataTablePaginationComponent]
+    DataTablePaginationComponent
+  ]
 })
 export class DataTableModule { }

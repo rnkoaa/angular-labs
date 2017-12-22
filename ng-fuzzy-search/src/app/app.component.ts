@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
     // throw new Error("Method not implemented.");
     this.personService.persons()
       .subscribe((response: Array<Person>) => {
-        // console.log(response);
         const opts = {
           shouldSort: true,
           threshold: 0.1,

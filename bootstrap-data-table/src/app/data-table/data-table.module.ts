@@ -18,7 +18,7 @@ import { SortService } from './sort.service';
     CommonModule,
     FormsModule,
     NgbModule
-  ],
+    ],
   entryComponents: [
     ItemPerPageComponent
   ],

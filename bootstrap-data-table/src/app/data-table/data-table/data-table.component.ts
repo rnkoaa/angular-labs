@@ -4,8 +4,8 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/debounceTime'
-import 'rxjs/add/operator/distinctUntilChanged'
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import {
   ChangeDetectionStrategy,
@@ -127,7 +127,13 @@ export class DataTableComponent implements OnInit, OnDestroy {
       // })
       .subscribe(term => {
         console.log('Search Term => ', term);
+        this.fuzzyService.searchObservable(this.osbservableData$, term)
+          .subscribe(results => {
+            // console.log(results);
+          });
       });
+
+
 
   }
 

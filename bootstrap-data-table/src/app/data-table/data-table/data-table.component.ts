@@ -7,16 +7,16 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
 
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    TemplateRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
@@ -37,6 +37,23 @@ import { ItemsPerPageService } from './items-per-page.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit, OnDestroy {
+
+  opts = {
+    shouldSort: true,
+    tokenize: true,
+    matchAllTokens: true,
+    includeMatches: true,
+    threshold: 0.3,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 3,
+    keys: [
+      'name',
+      'email',
+      'jobTitle'
+    ]
+  };
 
   displayData: Array<any>;
   displayData$: Observable<Array<any>>;
@@ -118,45 +135,31 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   registerFilter(): any {
-    // throw new Error("Method not implemented.");
     // when the search term is updated
+    // this.datatableSearchService.searchTerm$
+    //   .debounceTime(400)
+    //   .distinctUntilChanged()
+    //   // .switchMap(term => {
+    //   //   return this.osbservableData$
+    //   //   .filter(arrItem => )
+    //   // })
+    //   .subscribe(term => {
+    //     console.log('Search Term => ', term);
+    //     const result = this.fuseSearchService.search(this.data, term, this.opts);
+    //     console.log(result);
+    //   });
+
     this.datatableSearchService.searchTerm$
       .debounceTime(400)
       .distinctUntilChanged()
-      // .switchMap(term => {
-      //   return this.osbservableData$
-      //   .filter(arrItem => )
-      // })
-      .subscribe(term => {
-        console.log('Search Term => ', term);
-        const opts = {
-          shouldSort: true,
-          tokenize: true,
-          matchAllTokens: true,
-          includeMatches: true,
-          threshold: 0.3,
-          location: 0,
-          distance: 100,
-          maxPatternLength: 32,
-          minMatchCharLength: 3,
-          keys: [
-            'name',
-            'email',
-            'jobTitle'
-          ]
-        };
+      .switchMap(term => {
+        const result = this.fuseSearchService.searchObservable(this.osbservableData$, term, this.opts);
 
-        //  const results = this.fuzzySearchService.search("yahoo", response, opts)
-        //  console.log(results);
-        const result = this.fuseSearchService.search(this.data, term, opts);
-        console.log(result);
-
-        // this.fuzzyService.searchObservable(this.osbservableData$, term)
-        //   .subscribe(results => {
-        //     // console.log(results);
-        //   });
+        return result;
+      })
+      .subscribe(results => {
+        console.log(results);
       });
-
 
 
   }

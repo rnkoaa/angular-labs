@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import * as Fuse from 'fuse.js';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class FuseSearchService {
@@ -28,6 +29,12 @@ export class FuseSearchService {
     } else {
       return collection;
     }
+  }
+
+  searchObservable(collection: Observable<Object>, searchString: string, options: NgFuseOptions = {}): Observable<Object> {
+
+
+    return collection;
   }
 
 }

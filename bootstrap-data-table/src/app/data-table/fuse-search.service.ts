@@ -1,3 +1,6 @@
+import 'rxjs/add/operator/toArray';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 import { Injectable } from '@angular/core';
 import * as Fuse from 'fuse.js';
@@ -32,9 +35,19 @@ export class FuseSearchService {
   }
 
   searchObservable(collection: Observable<Object>, searchString: string, options: NgFuseOptions = {}): Observable<Object> {
+   return collection.toArray()
+      .switchMap(items => {
+        const mItems = items[0];
+        const mItemsArr = <Array<Object>>mItems;
+        const results = this.search(mItemsArr, searchString, options);
+        return results;
+      })
+     /* .subscribe(items => {
+          console.log("results");
+          console.log(items);
+      })*/;
 
-
-    return collection;
+    // return collection;
   }
 
 }

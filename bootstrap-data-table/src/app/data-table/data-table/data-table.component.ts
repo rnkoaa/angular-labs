@@ -42,7 +42,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     shouldSort: true,
     tokenize: true,
     matchAllTokens: true,
-    includeMatches: true,
+    // includeMatches: true,
     threshold: 0.3,
     location: 0,
     distance: 100,
@@ -135,30 +135,18 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   registerFilter(): any {
-    // when the search term is updated
-    // this.datatableSearchService.searchTerm$
-    //   .debounceTime(400)
-    //   .distinctUntilChanged()
-    //   // .switchMap(term => {
-    //   //   return this.osbservableData$
-    //   //   .filter(arrItem => )
-    //   // })
-    //   .subscribe(term => {
-    //     console.log('Search Term => ', term);
-    //     const result = this.fuseSearchService.search(this.data, term, this.opts);
-    //     console.log(result);
-    //   });
-
     this.datatableSearchService.searchTerm$
       .debounceTime(400)
       .distinctUntilChanged()
       .switchMap(term => {
         const result = this.fuseSearchService.searchObservable(this.osbservableData$, term, this.opts);
-
-        return result;
+        return result.toArray();
       })
-      .subscribe(results => {
-        console.log(results);
+      .subscribe(items => {
+        this.itemCount = items.length;
+        this.offset = 0;
+        this.displayData = items.slice(this.offset, this.offset + this.limit);
+        this.cd.markForCheck();
       });
 
 

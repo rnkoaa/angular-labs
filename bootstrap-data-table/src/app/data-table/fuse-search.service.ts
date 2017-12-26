@@ -41,13 +41,7 @@ export class FuseSearchService {
         const mItemsArr = <Array<Object>>mItems;
         const results = this.search(mItemsArr, searchString, options);
         return results;
-      })
-     /* .subscribe(items => {
-          console.log("results");
-          console.log(items);
-      })*/;
-
-    // return collection;
+      });
   }
 
 }

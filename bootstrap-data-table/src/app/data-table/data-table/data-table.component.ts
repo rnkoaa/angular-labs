@@ -63,6 +63,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   // currently showing data
   displayData: Array<any>;
+  selectedItems: Array<SelectionRow>;
 
   // the data for this table.
   data: Array<any>;
@@ -289,7 +290,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
       });
 
       if (this.options.config.clientPaging) {
-
+        this.data = this.sortService.sort(this.data, this.options.config.sortBy, this.options.config.sortDirection);
+        if (this.pagination) {
+          this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+        } else {
+          this.displayData = this.data;
+        }
       } else {
         // this is sorting on server
         if (this.sortable) {
@@ -325,4 +331,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
 export interface SortConfig {
   direction?: string;
   column?: string;
+}
+
+export interface SelectionRow {
+  index: number;
+  offset: number;
+  rowItem: any;
 }

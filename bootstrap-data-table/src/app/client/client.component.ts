@@ -23,10 +23,6 @@ export class ClientComponent implements OnInit {
   title = 'app';
   public hasChanges = true;
 
-
-  tableOptions: TableOptions;
-  tableConfig: TableConfig;
-
   constructor(private githubClientService: GithubClientService,
     private tableOptionsService: TableOptionsService) {
   }
@@ -49,19 +45,6 @@ export class ClientComponent implements OnInit {
       };
       this.tableOptionsService.updateOptions(tableOptions);
     });
-    // this.initTableOptions(this.records);
-  }
-
-  initTableOptions(items: Observable<GithubRepository[]>): any {
-    // this.tableOptions = <TableOptions>{
-    //   records: this.records,
-    //   config: <TableConfig>{
-    //     totalCount: 84,
-    //     maxSize: 10,
-    //     clientPaging: true
-    //   }
-    // };
-
   }
 
   canDeactivate() {

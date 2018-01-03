@@ -1,10 +1,17 @@
 import { ItemsPerPageService } from './items-per-page.service';
-import { ENTRIES_TEMPLATE } from './items-per-page.template';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-data-table-entries',
-  template: ENTRIES_TEMPLATE,
+  template: `
+  <div class="float-right">
+    <span>Show &nbsp;</span>
+    <select name="dt-entries-select" class="form-control input-sm dt-entries" [(ngModel)]="selectedValue">
+    <option [value]="5">Please Select</option>
+      <option *ngFor="let item of itemsPerPage" [selected]="item" [ngValue]="item">{{item}}</option>
+    </select>
+    <span>&nbsp; Entries</span>
+  </div>`,
   styles: [`
   select.dt-entries {
     width: 65px;

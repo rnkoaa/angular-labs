@@ -37,7 +37,6 @@ export class RemoteComponent implements OnInit, AfterViewInit {
 
     this.githubService.getRepositories(initialPageChangeEvent)
       .subscribe(res => {
-
         const options = <TableOptions>{
           records: res.data,
           config: <TableConfig>{
@@ -55,11 +54,7 @@ export class RemoteComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // if (this.dataTableComponent != null) {
 
-    // } else {
-    //   console.log('datatable component is null');
-    // }
   }
 
   canDeactivate() {
@@ -71,7 +66,6 @@ export class RemoteComponent implements OnInit, AfterViewInit {
 
     this.githubService.getRepositories(event)
       .subscribe(res => {
-
         const options = <TableOptions>{
           records: res.data,
           config: <TableConfig>{

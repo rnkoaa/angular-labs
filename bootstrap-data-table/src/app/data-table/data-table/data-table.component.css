@@ -1,11 +1,27 @@
-th.sortable:hover{
+th.sortable:hover {
   cursor: pointer;
 }
 
-.table-bordered thead th, .table-bordered thead td {
+.table td, .table th {
   border-bottom-width: 1px;
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #e9ecef
 }
 
-.column-sort-icon{
+.data-table.table td {
+  vertical-align: middle;
+}
+
+.column-sort-icon {
   opacity: 0.4;
+}
+
+.column-expand,
+.column-select{
+  text-align: center;
+}
+
+.column-index {
+  text-align: right;
 }

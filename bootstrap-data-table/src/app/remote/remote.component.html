@@ -1,0 +1,28 @@
+<app-data-table [sortable]="true" [pagination]="true" [expandable]="true" [selectRowVisible]="true"
+  [showIndex]="true" (reload)="reload($event)">
+  <ng-template #dataTableExpand let-row="row" let-owner="row.owner">
+    <div class="row">
+      <div class="col-sm-6">
+        <span>{{ owner.login }} </span>
+      </div>
+      <div class="col-sm-6">
+        Details
+      </div>
+    </div>
+  </ng-template>
+  <app-data-table-column [name]="'id'" [header]="'Github Id'" [width]="110" [sortable]="true">
+  </app-data-table-column>
+  <app-data-table-column [name]="'name'" [header]="'Name'" [width]="460" [sortable]="true">
+  </app-data-table-column>
+  <app-data-table-column [name]="'size'" [header]="'Size'" [width]="90" [sortable]="true">
+  </app-data-table-column>
+  <app-data-table-column [name]="'language'" [header]="'Language'" [width]="140" [sortable]="true">
+  </app-data-table-column>
+  <app-data-table-column [name]="'forks'" [header]="'Forks'" [width]="90" [sortable]="true">
+  </app-data-table-column>
+  <app-data-table-column [name]="'html_url'" [header]="'Link'">
+    <ng-template #tableBodyTemplate let-column let-row="row">
+      <a href="{{row.html_url }}"> link </a>
+    </ng-template>
+  </app-data-table-column>
+</app-data-table>

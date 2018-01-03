@@ -2,6 +2,10 @@ import { ColumnSortEvent } from './column-sort-event';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
+// import * as sortBy from 'lodash/sortBy';
+
+import { sortBy} from 'lodash';
+
 @Injectable()
 export class SortService {
 

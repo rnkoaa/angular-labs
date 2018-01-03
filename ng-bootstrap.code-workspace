@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "bootstrap-data-table"
+		},
+		{
+			"path": "github-server"
 		}
 	],
 	"settings": {}

@@ -15,3 +15,5 @@ export class TableConfig {
   public stickyHeaderOffset = 0;
   public stickyContainer = '';
 }
+
+

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 
@@ -7,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 export class ItemsPerPageService {
   constructor() { }
 
-  private itemCountUpdatedSource = new Subject<number>();
+  private itemCountUpdatedSource = new BehaviorSubject<number>(-1);
 
   itemCountUpdated$ = this.itemCountUpdatedSource.asObservable();
 

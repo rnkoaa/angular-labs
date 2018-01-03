@@ -34,14 +34,14 @@ export const SEARCH_TEMPLATE = `
     </div>
   </div>`;
 
+  // https://www.codeply.com/go/NWwzFSAUVu/bootstrap-4-dropdown-as-select-button-group
+  // https://www.bootply.com/9y1cSTE0W0
 export const ENTRIES_TEMPLATE = `
 <div class="float-right">
   <span>Show &nbsp;</span>
-  <select name="dt-entries-select" class="form-control input-sm dt-entries">
-    <option value="10">10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
+  <select name="dt-entries-select" class="form-control input-sm dt-entries" [(ngModel)]="selectedValue">
+  <option [value]="5">Please Select</option>
+    <option *ngFor="let item of itemsPerPage" [selected]="item" [ngValue]="item">{{item}}</option>
   </select>
   <span>&nbsp; Entries</span>
 </div>`;

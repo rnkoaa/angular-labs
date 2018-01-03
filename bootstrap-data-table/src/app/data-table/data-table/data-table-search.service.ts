@@ -6,7 +6,7 @@ export class DataTableSearchService {
   constructor() { }
 
   searchTerm$;
-  private searchTermSource = new Subject<string>();
+  // private searchTermSource = new Subject<string>();
 
   // private itemCountUpdatedSource = new Subject<number>();
 

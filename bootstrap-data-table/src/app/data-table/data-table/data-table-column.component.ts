@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-data-table-column',
-  templateUrl: './data-table-column.component.html',
+  // templateUrl: './data-table-column.component.html',
+  template: ``,
   styleUrls: ['./data-table-column.component.css']
 })
 export class DataTableColumnComponent implements OnInit {
@@ -21,8 +22,8 @@ export class DataTableColumnComponent implements OnInit {
 
   private styleClassObject = {}; // for [ngClass]
 
-  constructor(table: DataTableComponent, private sortService: SortService) {
-    table.addColumn(this);
+  constructor(dataTable: DataTableComponent, private sortService: SortService) {
+    dataTable.addColumn(this);
   }
 
   ngOnInit() {

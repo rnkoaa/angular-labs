@@ -1,0 +1,22 @@
+{
+  "name": "github-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "parse-link-header": "^1.0.1",
+    "restify": "^6.3.4",
+    "restify-errors": "^5.0.0",
+    "restify-plugins": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
+  }
+}

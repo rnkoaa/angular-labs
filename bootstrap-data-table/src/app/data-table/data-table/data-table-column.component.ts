@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-data-table-column',
-  // templateUrl: './data-table-column.component.html',
   template: ``,
   styleUrls: ['./data-table-column.component.css']
 })

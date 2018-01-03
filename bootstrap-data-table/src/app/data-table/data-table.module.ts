@@ -14,6 +14,7 @@ import { ItemPerPageComponent } from './data-table/item-per-page.component';
 import { ItemsPerPageService } from './data-table/items-per-page.service';
 import { SortService } from './sort.service';
 import { FuseSearchService } from './fuse-search.service';
+import { SortableColumnDirective } from './sortable-column.directive';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { FuseSearchService } from './fuse-search.service';
     DataTableSearchComponent,
     ItemPerPageComponent,
     DataTableEntriesComponent,
-    DataTablePaginationComponent
+    DataTablePaginationComponent,
+    SortableColumnDirective
   ]
 })
 export class DataTableModule { }

@@ -1,3 +1,4 @@
+import { LoadingComponent } from './data-table/loading.component';
 import { TableOptionsService } from './data-table/table-options.service';
 import { DataTableSearchService } from './data-table/data-table-search.service';
 import { DataTableEntriesComponent } from './data-table/data-table-entries.component';
@@ -38,6 +39,7 @@ import { SortableColumnDirective } from './sortable-column.directive';
   ],
   declarations: [
     DataTableComponent,
+    LoadingComponent,
     DataTableColumnComponent,
     DataTableSearchComponent,
     ItemPerPageComponent,

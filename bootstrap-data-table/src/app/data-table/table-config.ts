@@ -8,6 +8,7 @@ export class TableConfig {
   public maxSize  = 10;
   public showSelectCheckbox = true;
   public showSelectAll = true;
+  public multiSelect = false;
   public showSort = true;
   public clientSort = false;
   public clientPaging = false;

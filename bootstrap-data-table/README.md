@@ -7,6 +7,7 @@ created, updated, pushed, full_name
 ```sh
   // https://www.codeply.com/go/NWwzFSAUVu/bootstrap-4-dropdown-as-select-button-group
   // https://www.bootply.com/9y1cSTE0W0
+  https://projects.lukehaas.me/css-loaders/
 ```
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.0.

@@ -335,7 +335,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
         if (this.pagination) {
           this.displayData = this.data.slice(this.offset, this.offset + this.limit);
         } else {
-          this.displayData = this.convertItems(this.data);
+          this.displayData = this.data;
         }
       } else {
         // this is sorting on server

@@ -23,6 +23,7 @@ export class ClientComponent implements OnInit {
   title = 'app';
   public hasChanges = true;
 
+
   tableOptions: TableOptions = <TableOptions>{
     showLoader: false,
     loading: false,
@@ -32,6 +33,7 @@ export class ClientComponent implements OnInit {
       clientSort: true,
     }
   };
+
   constructor(private githubClientService: GithubClientService,
     private tableOptionsService: TableOptionsService) {
   }

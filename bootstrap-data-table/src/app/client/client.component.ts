@@ -1,3 +1,4 @@
+import { SelectedItem } from '../data-table/selected-item';
 import { PageChangeEvent } from '../data-table/page-change-event';
 import { TableOptionsService } from '../data-table/data-table/table-options.service';
 import { DataTableComponent } from '../data-table/data-table/data-table.component';
@@ -108,6 +109,10 @@ export class ClientComponent implements OnInit {
   reload(event) {
     // console.log('Got Reload Event');
     // console.log(JSON.stringify(this.tableOptions));
+  }
+
+  selectedRows(selectedItems: SelectedItem[]){
+    console.log(`Received Selected Items: ${selectedItems.length}`);
   }
 
 }

@@ -96,7 +96,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() header = true;
 
   @Output() reload = new EventEmitter();
-  @Output() selectRowEventEmitter = new EventEmitter<ItemCheckedEvent>();
+  @Output() selectRows = new EventEmitter<SelectedItem[]>();
 
   offset = 0;
   itemCount: number;
@@ -200,7 +200,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   // page change handler.
   onPageChange(offset) {
-    console.log(this.selectedItem);
     this.offset = offset;
     if (!this.options.config.clientPaging) {
       const currentPage = (this.offset / this.limit) + 1;
@@ -302,7 +301,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
       this.selectedItems = [selectedRow];
     }
 
-    console.log(`RowNumber: ${currentRowNumber} Selected items length: ${this.selectedItems.length}`);
+    // console.log(`RowNumber: ${currentRowNumber} Selected items length: ${this.selectedItems.length}`);
+    this.selectRows.emit(this.selectedItems);
   }
 
   headerClicked(column: DataTableColumnComponent, event) {

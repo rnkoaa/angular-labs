@@ -1,4 +1,6 @@
-<app-data-table [sortable]="true" [pagination]="true" [multiSelect]="true" [expandable]="true" [selectRowVisible]="true" [showIndex]="true" (reload)="reload($event)">
+<app-data-table [sortable]="true" [pagination]="true"
+ [multiSelect]="true" [expandable]="true" [selectRowVisible]="true" [showIndex]="true"
+ (selectRows)="selectedRows($event)" (reload)="reload($event)">
   <ng-template #dataTableExpand let-row="row" let-owner="row.owner">
     <div class="row">
       <div class="col-sm-6">

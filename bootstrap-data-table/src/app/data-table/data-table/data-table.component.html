@@ -25,7 +25,8 @@
       </div>
     </div>
     <app-loading *ngIf="showLoading && loading"></app-loading>
-    <table *ngIf="showLoading && !loading" class="table table-striped table-hover table-bordered data-table">
+    <!-- <table *ngIf="showLoading && !loading" class="table table-striped table-hover table-bordered data-table"> -->
+    <table *ngIf="!loading" class="table table-striped table-hover table-bordered data-table">
       <thead>
         <tr>
           <th *ngIf="expandable" class="column-expand" width="50"></th>
@@ -76,7 +77,8 @@
       </tbody>
     </table>
 
-    <app-data-table-pagination *ngIf="pagination && showLoading && !loading" [offset]="offset" [limit]="limit" [size]="itemCount"
+    <!-- <app-data-table-pagination *ngIf="pagination && showLoading && !loading" [offset]="offset" [limit]="limit" [size]="itemCount" -->
+    <app-data-table-pagination *ngIf="pagination && !loading" [offset]="offset" [limit]="limit" [size]="itemCount"
       (pageChange)="onPageChange($event)"></app-data-table-pagination>
   </div>
 </div>

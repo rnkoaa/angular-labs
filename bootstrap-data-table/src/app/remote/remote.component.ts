@@ -39,6 +39,7 @@ export class RemoteComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         const options = <TableOptions>{
           records: res.data,
+          loading: false,
           config: <TableConfig>{
             clientPaging: false,
             pageSize: res.size,

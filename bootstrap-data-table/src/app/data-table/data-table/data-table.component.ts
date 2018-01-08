@@ -149,10 +149,18 @@ export class DataTableComponent implements OnInit, OnDestroy {
         this.registerItemsPerPage();
         this.registerFilter();
       } else {
-        this.displayData = this.convertItems(this.options.records);
-        this.itemCount = this.options.config.totalCount;
-        this.limit = this.options.config.pageSize;
-        this.cd.markForCheck();
+        if (this.options.records) {
+          this.data = this.convertItems(this.options.records);
+          // this.displayData = this.convertItems(this.options.records);
+          this.displayData = this.data;
+          this.itemCount = this.options.config.totalCount;
+          this.limit = this.options.config.pageSize;
+          console.log(`Total Item Count: ${this.itemCount}, Limit: ${this.limit}`);
+          // console.log(this.displayData);
+          // this.cd.markForCheck();
+
+          this.cd.markForCheck();
+        }
       }
     });
   }
@@ -356,9 +364,18 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  isSelected(rowItem: RowItem): boolean {
+    // this.selectedItems
+    const currentRowNumber = this.offset + rowItem.index + 1;
+    const index = this.selectedItems.findIndex(k => k.rowNumber === currentRowNumber);
+    return index > -1;
+  }
+
   convertItems(items: Array<any>): Array<RowItem> {
     return items.map((currentItem, idx) => {
-      return new RowItem(currentItem, idx);
+      const rowItem =  new RowItem(currentItem, idx);
+      rowItem.selected = this.isSelected(rowItem);
+      return rowItem;
     });
   }
 

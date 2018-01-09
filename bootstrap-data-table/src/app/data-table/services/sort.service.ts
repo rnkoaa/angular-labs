@@ -1,11 +1,11 @@
-import { ColumnSortEvent } from './column-sort-event';
+import { ColumnSortEvent } from '../models/column-sort-event';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 // import * as sortBy from 'lodash/sortBy';
 
 import { sortBy} from 'lodash';
-import { RowItem } from './data-table/row-item';
+import { RowItem } from '../models/row-item';
 
 @Injectable()
 export class SortService {

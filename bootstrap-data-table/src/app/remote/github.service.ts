@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 
 import { Observable } from 'rxjs/Observable';
-import { PageChangeEvent, PageChangeType } from '../data-table/page-change-event';
+import { PageChangeEvent, PageChangeType } from '../data-table/models/page-change-event';
 
 @Injectable()
 export class GithubService {

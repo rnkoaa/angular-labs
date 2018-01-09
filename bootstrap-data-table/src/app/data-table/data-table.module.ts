@@ -1,21 +1,21 @@
-import { LoadingComponent } from './data-table/loading.component';
-import { TableOptionsService } from './data-table/table-options.service';
-import { DataTableSearchService } from './data-table/data-table-search.service';
-import { DataTableEntriesComponent } from './data-table/data-table-entries.component';
+import { LoadingComponent } from './components/loading.component';
+import { DataTableSearchService } from './services/data-table-search.service';
+import { DataTableEntriesComponent } from './components/data-table-entries.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { DataTableColumnComponent } from './data-table/data-table-column.component';
-import { DataTablePaginationComponent } from './data-table-pagination/data-table-pagination.component';
-import { DataTableSearchComponent } from './data-table/data-table-search.component';
-import { DataTableComponent } from './data-table/data-table.component';
-import { ItemPerPageComponent } from './data-table/item-per-page.component';
-import { ItemsPerPageService } from './data-table/items-per-page.service';
-import { SortService } from './sort.service';
-import { FuseSearchService } from './fuse-search.service';
-import { SortableColumnDirective } from './sortable-column.directive';
+import { DataTableColumnComponent } from './components/data-table-column.component';
+import { DataTablePaginationComponent } from './components/data-table-pagination.component';
+import { DataTableSearchComponent } from './components/data-table-search.component';
+import { DataTableComponent } from './components/data-table.component';
+import { ItemPerPageComponent } from './components/item-per-page.component';
+import { ItemsPerPageService } from './services/items-per-page.service';
+import { SortService } from './services/sort.service';
+import { FuseSearchService } from './services/fuse-search.service';
+import { SortableColumnDirective } from './directives/sortable-column.directive';
+import { DataTableResourceService } from './services/data-table-resource.service';
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import { SortableColumnDirective } from './sortable-column.directive';
     DataTableColumnComponent
   ],
   providers: [
-    TableOptionsService,
+    DataTableResourceService,
     SortService,
     ItemsPerPageService,
     DataTableSearchService,

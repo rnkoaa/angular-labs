@@ -1,10 +1,10 @@
-import { TableConfig } from '../table-config';
+import { TableConfig } from '../models/table-config';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TableOptions } from '../table-options';
+import { TableOptions } from '../models/table-options';
 
 @Injectable()
-export class TableOptionsService {
+export class DataTableResourceService {
   private tableOptions$ = new BehaviorSubject<TableOptions>(<TableOptions>{
     config: <TableConfig>{
       clientPaging: false,

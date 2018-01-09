@@ -1,7 +1,7 @@
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, Input } from '@angular/core';
 import { MODAL_TEMPLATE } from './items-per-page.template';
-import { ItemsPerPageService } from './items-per-page.service';
+import { ItemsPerPageService } from '../services/items-per-page.service';
 
 @Component({
   selector: 'app-item-per-page',

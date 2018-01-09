@@ -1,3 +1,4 @@
+import { SelectedItem } from '../data-table/selected-item';
 import { PageChangeEvent } from '../data-table/page-change-event';
 import { TableOptionsService } from '../data-table/data-table/table-options.service';
 import { DataTableComponent } from '../data-table/data-table/data-table.component';
@@ -23,15 +24,68 @@ export class ClientComponent implements OnInit {
   title = 'app';
   public hasChanges = true;
 
+
+  tableOptions: TableOptions = <TableOptions>{
+    showLoader: false,
+    loading: false,
+    config: <TableConfig>{
+      clientPaging: true,
+      pageSize: 10,
+      clientSort: true,
+    }
+  };
+
   constructor(private githubClientService: GithubClientService,
     private tableOptionsService: TableOptionsService) {
   }
 
   public ngOnInit(): void {
+    this.tableOptionsService.updateOptions(this.tableOptions);
     const initialPageChangeEvent = <PageChangeEvent>{
       page: 1,
       size: 10
     };
+
+    this.loadClientData();
+  }
+
+  fakeLoading() {
+    const shadow = this;
+    setTimeout(() => {
+      shadow.githubClientService.getRepos()
+        .subscribe(res => {
+          shadow.tableOptions = <TableOptions>{
+            records: res,
+            showLoader: true,
+            loading: false,
+            config: <TableConfig>{
+              clientPaging: true,
+              pageSize: 10,
+              clientSort: true,
+              totalCount: res.length
+            }
+          };
+          shadow.tableOptionsService.updateOptions(shadow.tableOptions);
+        });
+    }, 5000);
+  }
+
+  loadClientData() {
+    this.githubClientService.getRepos()
+      .subscribe(res => {
+        this.tableOptions = <TableOptions>{
+          records: res,
+          showLoader: true,
+          loading: false,
+          config: <TableConfig>{
+            clientPaging: true,
+            pageSize: 10,
+            clientSort: true,
+            totalCount: res.length
+          }
+        };
+        this.tableOptionsService.updateOptions(this.tableOptions);
+      });
     this.githubClientService.getRepos()
     .subscribe(res => {
       const tableOptions = <TableOptions>{
@@ -55,6 +109,10 @@ export class ClientComponent implements OnInit {
   reload(event) {
     // console.log('Got Reload Event');
     // console.log(JSON.stringify(this.tableOptions));
+  }
+
+  selectedRows(selectedItems: SelectedItem[]){
+    console.log(`Received Selected Items: ${selectedItems.length}`);
   }
 
 }

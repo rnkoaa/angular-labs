@@ -5,14 +5,15 @@ import { Subject } from 'rxjs/Subject';
 // import * as sortBy from 'lodash/sortBy';
 
 import { sortBy} from 'lodash';
+import { RowItem } from './data-table/row-item';
 
 @Injectable()
 export class SortService {
 
   constructor() { }
-  sort(items: Array<any>, key: string, direction = 'asc'): Array<any> {
+  sort(items: Array<RowItem>, key: string, direction = 'asc'): Array<any> {
     return items.sort((item1, item2) => {
-      return this.compare(item1, item2, key, direction);
+      return this.compare(item1.item, item2.item, key, direction);
     });
   }
 

@@ -35,6 +35,8 @@ import { PageChangeEvent, PageChangeType } from '../page-change-event';
 import { DataTablePaginationComponent } from '../data-table-pagination/data-table-pagination.component';
 import { ItemCheckedEvent } from './data-table-checked-event';
 import { TableOptionsService } from './table-options.service';
+import { SelectedItem } from '../selected-item';
+import { RowItem } from './row-item';
 
 @Component({
   selector: 'app-data-table',
@@ -62,27 +64,26 @@ export class DataTableComponent implements OnInit, OnDestroy {
   };
 
   // currently showing data
-  displayData: Array<any>;
-  selectedItems: Array<SelectionRow>;
+  displayData: Array<RowItem>;
+  selectedItem: SelectedItem;
+  selectedItems: Array<SelectedItem> = [];
 
   // the data for this table.
-  data: Array<any>;
+  data: Array<RowItem>;
   _subscription: Subscription;
   private _sortBy: string;
   private _sortAsc = true;
 
-  currentSort = <SortConfig>{};
-
   @Input()
-  private limit = 10;
+  limit = 10;
 
-  _reloading = false;
+  loading = false;
 
   @Input() options: TableOptions;
   @Input() sortable = false;
   @Input() pagination = false;
   @Input() selectColumn = false;
-  @Input() multiSelect = true;
+  @Input() multiSelect = false;
   @Input() selectRowVisible = false;
   @Input() expandable = false;
   @Input() expandedRowIndex: number;
@@ -90,12 +91,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() showExpandedRow: boolean;
   @Input() selectOnRowClick = false;
   @Input() autoReload = true;
-  @Input() showReloading = false;
+  @Input() showLoading = false;
   @Input() headerTitle: string;
   @Input() header = true;
 
   @Output() reload = new EventEmitter();
-  @Output() selectRowEventEmitter = new EventEmitter<ItemCheckedEvent>();
+  @Output() selectRows = new EventEmitter<SelectedItem[]>();
 
   offset = 0;
   itemCount: number;
@@ -121,6 +122,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(`Is MultiSelect: ${this.multiSelect}`);
     this.tableOptionsService.currentTableOptions$.subscribe(tableOptions => {
       this.options = tableOptions;
       if (this.options && this.options.config && this.options.config.clientPaging) {
@@ -128,31 +130,39 @@ export class DataTableComponent implements OnInit, OnDestroy {
         this.limit = this.options.config.pageSize;
         console.log('client pagination in progress');
 
-        this.data = this.options.records;
-        if (this.pagination) {
-          this.displayData = this.data.slice(this.offset, this.offset + this.limit);
-        } else {
-          this.displayData = this.data;
+        if (this.options.showLoader) {
+          this.showLoading = this.options.showLoader;
+          this.loading = this.options.loading;
         }
-        this.cd.markForCheck();
+
+        // this.data = this.options.records;
+        if (this.options.records) { // data is still loading.
+          this.data = this.convertItems(this.options.records);
+          if (this.pagination) {
+            this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+          } else {
+            this.displayData = this.data;
+          }
+          this.cd.markForCheck();
+        }
 
         this.registerItemsPerPage();
         this.registerFilter();
-
       } else {
-        this.displayData = this.options.records;
-        this.itemCount = this.options.config.totalCount;
-        this.limit = this.options.config.pageSize;
-        this.cd.markForCheck();
+        if (this.options.records) {
+          this.data = this.convertItems(this.options.records);
+          // this.displayData = this.convertItems(this.options.records);
+          this.displayData = this.data;
+          this.itemCount = this.options.config.totalCount;
+          this.limit = this.options.config.pageSize;
+          console.log(`Total Item Count: ${this.itemCount}, Limit: ${this.limit}`);
+          // console.log(this.displayData);
+          // this.cd.markForCheck();
+
+          this.cd.markForCheck();
+        }
       }
     });
-  }
-
-  get loading(): boolean {
-    return this._reloading;
-  }
-  set loading(loading: boolean) {
-    this._reloading = loading;
   }
 
   registerItemsPerPage(): void {
@@ -160,16 +170,14 @@ export class DataTableComponent implements OnInit, OnDestroy {
       .subscribe(itemsPerPage => {
         if (itemsPerPage >= 0) {
           this.limit = itemsPerPage;
-        }
 
-        if (this.pagination) {
-          console.log(`Offset for table: ${this.offset}`);
-          this.displayData = this.data.slice(this.offset, this.offset + this.limit);
-        } else {
-          this.displayData = this.data;
+          if (this.pagination && this.data) {
+            this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+          } else {
+            this.displayData = this.data;
+          }
+          this.cd.markForCheck();
         }
-        this.cd.markForCheck();
-
       });
   }
 
@@ -190,9 +198,9 @@ export class DataTableComponent implements OnInit, OnDestroy {
         this.itemCount = searchResults.length;
         this.offset = 0;
         if (this.pagination) {
-          this.displayData = searchResults.slice(this.offset, this.offset + this.limit);
+          this.displayData = this.data.slice(this.offset, this.offset + this.limit);
         } else {
-          this.displayData = searchResults;
+          this.displayData = this.data;
         }
         this.cd.markForCheck();
       });
@@ -255,13 +263,54 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectRow(row: any, idx: number, event) {
-    const itemCheckedEvent = <ItemCheckedEvent>{
-      row: row,
+  selectRow(row: RowItem, idx: number, event) {
+    const currentRowNumber = this.offset + idx + 1;
+
+    if (event.target.checked) {
+      row.selected = true;
+    } else {
+      row.selected = false;
+    }
+
+    const selectedRow = <SelectedItem>{
+      selected: row.selected,
+      rowNumber: currentRowNumber,
+      item: row,
       index: idx,
-      checked: event.target.checked
+      offset: this.offset
     };
-    this.selectRowEventEmitter.emit(itemCheckedEvent);
+
+    // maintain the selectedRow(s) view
+    if (this.multiSelect) {
+      const index = this.selectedItems.findIndex(k => k.rowNumber === currentRowNumber);
+      if (row.selected && index < 0) {
+        this.selectedItems.push(selectedRow);
+      } else if (!row.selected && index >= 0) {
+        this.selectedItems.splice(index, 1);
+      }
+    } else {
+      console.log(row.selected);
+      if (row.selected) {
+        this.selectedItem = selectedRow;
+      } else if (this.selectedItem === selectedRow) {
+        this.selectedItem = undefined;
+      }
+      console.log(this.selectedItem);
+    }
+
+    // unselect all other rows.
+    if (row.selected && !this.multiSelect) {
+      this.data.filter(_row => _row.selected)
+        .forEach(_row => {
+          if (_row !== row) { // avoid endless loop
+            _row.selected = false;
+          }
+        });
+      this.selectedItems = [selectedRow];
+    }
+
+    // console.log(`RowNumber: ${currentRowNumber} Selected items length: ${this.selectedItems.length}`);
+    this.selectRows.emit(this.selectedItems);
   }
 
   headerClicked(column: DataTableColumnComponent, event) {
@@ -315,6 +364,21 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  isSelected(rowItem: RowItem): boolean {
+    // this.selectedItems
+    const currentRowNumber = this.offset + rowItem.index + 1;
+    const index = this.selectedItems.findIndex(k => k.rowNumber === currentRowNumber);
+    return index > -1;
+  }
+
+  convertItems(items: Array<any>): Array<RowItem> {
+    return items.map((currentItem, idx) => {
+      const rowItem =  new RowItem(currentItem, idx);
+      rowItem.selected = this.isSelected(rowItem);
+      return rowItem;
+    });
+  }
+
   public ngOnDestroy(): void {
     this.itemPerPageSubscription.unsubscribe();
   }
@@ -326,15 +390,4 @@ export class DataTableComponent implements OnInit, OnDestroy {
     columnCount = (this.selectRowVisible) ? columnCount + 1 : columnCount;
     return columnCount;
   }
-}
-
-export interface SortConfig {
-  direction?: string;
-  column?: string;
-}
-
-export interface SelectionRow {
-  index: number;
-  offset: number;
-  rowItem: any;
 }

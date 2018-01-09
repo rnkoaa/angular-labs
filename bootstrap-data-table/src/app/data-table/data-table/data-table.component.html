@@ -24,7 +24,9 @@
         <app-data-table-entries></app-data-table-entries>
       </div>
     </div>
-    <table class="table table-striped table-hover table-bordered data-table">
+    <app-loading *ngIf="showLoading && loading"></app-loading>
+    <!-- <table *ngIf="showLoading && !loading" class="table table-striped table-hover table-bordered data-table"> -->
+    <table *ngIf="!loading" class="table table-striped table-hover table-bordered data-table">
       <thead>
         <tr>
           <th *ngIf="expandable" class="column-expand" width="50"></th>
@@ -48,7 +50,7 @@
       <tbody>
         <ng-template ngFor let-row [ngForOf]="displayData" let-idx="index">
           <tr>
-            <td class="column-expand" (click)="toggleRowExpansion(row, idx)" *ngIf="expandable"
+            <td class="column-expand" (click)="toggleRowExpansion(row.item, idx)" *ngIf="expandable"
             width="50" style="text-align:center; padding:0px; padding-top:7px;">
               <a style="width:100%; text-align:center;">
                 <i [ngClass]="{'fa': true, 'fa-plus-circle': idx != expandedRowIndex,
@@ -57,25 +59,26 @@
             </td>
             <td *ngIf="showIndex" class="column-index" width="50">{{ (idx + 1) + offset }}</td>
             <td *ngIf="selectRowVisible"  class="column-select" width="40" class="select-column">
-                <input type="checkbox" (change)="selectRow(row, idx, $event)"/>
+                <input type="checkbox" [(ngModel)]="row.selected" (change)="selectRow(row, idx, $event)"/>
             </td>
             <td *ngFor="let column of columns" [attr.width]="column.width > 0 ? column.width : 0">
-              <ng-container *ngIf="!column.bodyTemplate">{{row[column.name]}}</ng-container>
+              <ng-container *ngIf="!column.bodyTemplate">{{row.item[column.name]}}</ng-container>
               <ng-template *ngIf="column.bodyTemplate" [ngTemplateOutlet]="column.bodyTemplate"
-                [ngTemplateOutletContext]="{ $implicit: { value: row[column.name] }, row: row }">
+                [ngTemplateOutletContext]="{ $implicit: { value: row.item[column.name] }, row: row.item }">
               </ng-template>
             </td>
           </tr>
           <tr *ngIf="showExpandedRow && (idx == expandedRowIndex) && expandable" class="table-info">
             <td *ngIf="showIndex" [attr.colspan]="columnCount">
-              <ng-template *ngIf="expandTemplate" [ngTemplateOutlet]="expandTemplate" [ngTemplateOutletContext]="{row: row}"></ng-template>
+              <ng-template *ngIf="expandTemplate" [ngTemplateOutlet]="expandTemplate" [ngTemplateOutletContext]="{row: row.item}"></ng-template>
             </td>
           </tr>
         </ng-template>
       </tbody>
     </table>
 
-    <app-data-table-pagination *ngIf="pagination" [offset]="offset" [limit]="limit" [size]="itemCount"
+    <!-- <app-data-table-pagination *ngIf="pagination && showLoading && !loading" [offset]="offset" [limit]="limit" [size]="itemCount" -->
+    <app-data-table-pagination *ngIf="pagination && !loading" [offset]="offset" [limit]="limit" [size]="itemCount"
       (pageChange)="onPageChange($event)"></app-data-table-pagination>
   </div>
 </div>

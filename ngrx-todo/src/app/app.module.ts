@@ -1,25 +1,25 @@
-import { todos } from './store/todos.reducer';
-import { TodoService } from './services/todo.service';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
+import { StoreModule } from '@ngrx/store';
+import { simpleReducer } from './reducers/simple.reducer';
 import { AppComponent } from './app.component';
-import { TodoComponent } from './components/todo/todo.component';
-import { TodosComponent } from './components/todos/todos.component';
+import { postReducer } from './reducers/post.reducer';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoComponent,
-    TodosComponent
   ],
   imports: [
     BrowserModule,
-    StoreModule.provideStore({todos}),
+    FormsModule,
+    StoreModule.forRoot({
+      message: simpleReducer,
+      post: postReducer
+    })
   ],
-  providers: [TodoService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

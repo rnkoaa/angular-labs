@@ -25,7 +25,7 @@ export class DataTablePaginationComponent implements OnInit, OnChanges {
   @Input() offset = 0;
   @Input() limit = 1;
   @Input() size = 1;
-  @Input() range = 3;
+  @Input() range = 1;
 
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -41,7 +41,11 @@ export class DataTablePaginationComponent implements OnInit, OnChanges {
   }
 
   selectPage(page: number, event) {
+    // console.log(`CurrentPage + range: ${this.currentPage + this.range}`);
     this.cancelEvent(event);
+    // if (this.currentPage >= this.totalPages) {
+    //   this.cancelEvent(event);
+    // }
     if (this.isValidPageNumber(page, this.totalPages)) {
       if (page >= 1 && page <= this.totalPages) {
         this.pageChange.emit((page - 1) * this.limit);

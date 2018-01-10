@@ -189,18 +189,19 @@ export class DataTableComponent implements OnInit, OnDestroy {
       .map(searchTerm => {
         // enforce a minimum search length of at least 3 characters.
         if (searchTerm && searchTerm.length >= 3) {
-          return this.fuseSearchService.search(this.data, searchTerm, this.opts);
+          const response =  this.fuseSearchService.search(this.data, searchTerm, this.opts);
+          return this.convertItems(response);
+        } else {
+          return this.data;
         }
-        return this.data;
       })
       .subscribe(searchResults => {
-        console.log(searchResults);
         this.itemCount = searchResults.length;
         this.offset = 0;
         if (this.pagination) {
-          this.displayData = this.data.slice(this.offset, this.offset + this.limit);
+          this.displayData = searchResults.slice(this.offset, this.offset + this.limit);
         } else {
-          this.displayData = this.data;
+          this.displayData = searchResults;
         }
         this.cd.markForCheck();
       });
@@ -373,7 +374,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   convertItems(items: Array<any>): Array<RowItem> {
     return items.map((currentItem, idx) => {
-      const rowItem =  new RowItem(currentItem, idx);
+      const rowItem = new RowItem(currentItem, idx);
       rowItem.selected = this.isSelected(rowItem);
       return rowItem;
     });

@@ -21,12 +21,13 @@ export class FuseSearchService {
 
   searchOptions: NgFuseOptions = this.defaults;
 
-  search(collection: Array<Object>, searchString: string, options: NgFuseOptions = {}) {
+  search(collection: Array<any>, searchString: string, options: NgFuseOptions = {}) {
     Object.assign(this.searchOptions, this.defaults, options);
 
     let results = [];
     if (searchString && searchString.length >= this.searchOptions.minSearchStringLenght) {
-      const fuse = new Fuse(collection, this.searchOptions);
+      const actualSearchItems = collection.map(currentVar => currentVar.item);
+      const fuse = new Fuse(actualSearchItems, this.searchOptions);
       results = fuse.search(searchString);
       return results;
     } else {

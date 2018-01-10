@@ -37,7 +37,7 @@ import { RowItem } from '../models/row-item';
 import { DataTableResourceService } from '../services/data-table-resource.service';
 
 @Component({
-  selector: 'app-data-table',
+  selector: 'data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

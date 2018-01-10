@@ -4,7 +4,7 @@ import { SortService } from '../services/sort.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-data-table-column',
+  selector: 'dt-column',
   template: ``,
   styleUrls: ['./data-table-column.component.css']
 })

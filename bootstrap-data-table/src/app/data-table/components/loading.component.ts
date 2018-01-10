@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'app-loading',
+  selector: 'dt-loading',
   template: `<div class="loader">Loading...</div>`,
   styleUrls: [`./loading.component.css`]
 })

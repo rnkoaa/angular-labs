@@ -6,7 +6,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { DataTableSearchService } from '../services/data-table-search.service';
 @Component({
-  selector: 'app-data-table-search',
+  selector: 'dt-search',
   template: `
   <div class="form-group row">
     <label for="colFormLabelSm" class="col-auto col-form-label col-form-label-md">Filter:</label>

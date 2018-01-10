@@ -2,7 +2,7 @@ import { ItemsPerPageService } from '../services/items-per-page.service';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-data-table-entries',
+  selector: 'dt-entries',
   template: `
   <div class="float-right">
     <span>Show &nbsp;</span>

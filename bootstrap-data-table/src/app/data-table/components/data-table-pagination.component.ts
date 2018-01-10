@@ -18,7 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { PageNumber } from '../models/page-number';
 
 @Component({
-  selector: 'app-data-table-pagination',
+  selector: 'dt-pagination',
   templateUrl: './data-table-pagination.component.html'
 })
 export class DataTablePaginationComponent implements OnInit, OnChanges {

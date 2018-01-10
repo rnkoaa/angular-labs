@@ -1,6 +1,7 @@
 import { LoadingComponent } from './components/loading.component';
 import { DataTableSearchService } from './services/data-table-search.service';
 import { DataTableEntriesComponent } from './components/data-table-entries.component';
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';

@@ -2,6 +2,7 @@ import { SelectedItem } from '../data-table/models/selected-item';
 import { PageChangeEvent } from '../data-table/models/page-change-event';
 import { DataTableComponent } from '../data-table/components/data-table.component';
 import { ColumnDefinition } from '../data-table/models/column-definition';
+
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { TableOptions } from '../data-table/models/table-options';
 import { TableConfig } from '../data-table/models/table-config';
@@ -87,18 +88,18 @@ export class ClientComponent implements OnInit {
         this.tableResourceService.updateOptions(this.tableOptions);
       });
     this.githubClientService.getRepos()
-    .subscribe(res => {
-      const tableOptions = <TableOptions>{
-        records: res,
-        config: <TableConfig>{
-          clientPaging: true,
-          pageSize: 10,
-          clientSort: true,
-          totalCount: res.length
-        }
-      };
-      this.tableResourceService.updateOptions(tableOptions);
-    });
+      .subscribe(res => {
+        const tableOptions = <TableOptions>{
+          records: res,
+          config: <TableConfig>{
+            clientPaging: true,
+            pageSize: 10,
+            clientSort: true,
+            totalCount: res.length
+          }
+        };
+        this.tableResourceService.updateOptions(tableOptions);
+      });
   }
 
   canDeactivate() {
@@ -111,7 +112,7 @@ export class ClientComponent implements OnInit {
     // console.log(JSON.stringify(this.tableOptions));
   }
 
-  selectedRows(selectedItems: SelectedItem[]){
+  selectedRows(selectedItems: SelectedItem[]) {
     console.log(`Received Selected Items: ${selectedItems.length}`);
   }
 

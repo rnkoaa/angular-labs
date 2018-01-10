@@ -199,9 +199,9 @@ export class DataTableComponent implements OnInit, OnDestroy {
         this.itemCount = searchResults.length;
         this.offset = 0;
         if (this.pagination) {
-          this.displayData = searchResults.slice(this.offset, this.offset + this.limit);
+          this.displayData = this.data.slice(this.offset, this.offset + this.limit);
         } else {
-          this.displayData = searchResults;
+          this.displayData = this.data;
         }
         this.cd.markForCheck();
       });

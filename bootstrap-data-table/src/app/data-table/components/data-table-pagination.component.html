@@ -13,7 +13,7 @@
     <li class="page-item" (click)="selectPage(1, $event)" *ngIf="currentPage > (range + 1)">
       <a href="" class="page-link"> 1 </a>
     </li>
-    <li class="disabled page-item" (click)="cancelEvent($event)" *ngIf="(currentPage - range) > (1 + 1)">
+    <li class="disabled page-item" (click)="cancelEvent($event)" *ngIf="(currentPage - range) > 2">
       <a href="" class="page-link">...</a>
     </li>
     <li *ngFor="let page of pages | async" [class.active]="page.value == currentPage"

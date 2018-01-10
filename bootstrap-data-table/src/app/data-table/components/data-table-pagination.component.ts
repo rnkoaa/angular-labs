@@ -25,7 +25,7 @@ export class DataTablePaginationComponent implements OnInit, OnChanges {
   @Input() offset = 0;
   @Input() limit = 1;
   @Input() size = 1;
-  @Input() range = 1;
+  @Input() range = 2;
 
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 

@@ -1,4 +1,4 @@
-import { ItemsPerPageService } from './items-per-page.service';
+import { ItemsPerPageService } from '../services/items-per-page.service';
 import { Component, Input } from '@angular/core';
 
 @Component({

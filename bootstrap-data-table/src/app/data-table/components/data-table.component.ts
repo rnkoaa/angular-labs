@@ -25,18 +25,18 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { DataTableColumnComponent } from './data-table-column.component';
-import { FuseSearchService } from '../fuse-search.service';
-import { SortService } from '../sort.service';
-import { TableOptions } from '../table-options';
-import { DataTableSearchService } from './data-table-search.service';
+import { FuseSearchService } from '../services/fuse-search.service';
+import { SortService } from '../services/sort.service';
+import { TableOptions } from '../models/table-options';
+import { DataTableSearchService } from '../services/data-table-search.service';
 import { ItemPerPageComponent } from './item-per-page.component';
-import { ItemsPerPageService } from './items-per-page.service';
-import { PageChangeEvent, PageChangeType } from '../page-change-event';
-import { DataTablePaginationComponent } from '../data-table-pagination/data-table-pagination.component';
-import { ItemCheckedEvent } from './data-table-checked-event';
-import { TableOptionsService } from './table-options.service';
-import { SelectedItem } from '../selected-item';
-import { RowItem } from './row-item';
+import { ItemsPerPageService } from '../services/items-per-page.service';
+import { PageChangeEvent, PageChangeType } from '../models/page-change-event';
+import { DataTablePaginationComponent } from './data-table-pagination.component';
+import { ItemCheckedEvent } from '../models/data-table-checked-event';
+import { SelectedItem } from '../models/selected-item';
+import { RowItem } from '../models/row-item';
+import { DataTableResourceService } from '../services/data-table-resource.service';
 
 @Component({
   selector: 'app-data-table',
@@ -112,7 +112,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     private itemsPerPageService: ItemsPerPageService,
     private datatableSearchService: DataTableSearchService,
     private modalService: NgbModal,
-    private tableOptionsService: TableOptionsService,
+    private tableResourceService: DataTableResourceService,
     private fuseSearchService: FuseSearchService,
     private cd: ChangeDetectorRef) {
   }
@@ -123,7 +123,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log(`Is MultiSelect: ${this.multiSelect}`);
-    this.tableOptionsService.currentTableOptions$.subscribe(tableOptions => {
+    this.tableResourceService.currentTableOptions$.subscribe(tableOptions => {
       this.options = tableOptions;
       if (this.options && this.options.config && this.options.config.clientPaging) {
         this.itemCount = this.options.config.totalCount;
@@ -189,12 +189,13 @@ export class DataTableComponent implements OnInit, OnDestroy {
       .map(searchTerm => {
         // enforce a minimum search length of at least 3 characters.
         if (searchTerm && searchTerm.length >= 3) {
-          return this.fuseSearchService.search(this.data, searchTerm, this.opts);
+          const response =  this.fuseSearchService.search(this.data, searchTerm, this.opts);
+          return this.convertItems(response);
+        } else {
+          return this.data;
         }
-        return this.data;
       })
       .subscribe(searchResults => {
-        console.log(searchResults);
         this.itemCount = searchResults.length;
         this.offset = 0;
         if (this.pagination) {
@@ -373,7 +374,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   convertItems(items: Array<any>): Array<RowItem> {
     return items.map((currentItem, idx) => {
-      const rowItem =  new RowItem(currentItem, idx);
+      const rowItem = new RowItem(currentItem, idx);
       rowItem.selected = this.isSelected(rowItem);
       return rowItem;
     });

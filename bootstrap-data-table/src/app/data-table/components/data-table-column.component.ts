@@ -1,6 +1,6 @@
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
-import { DataTableComponent } from '../data-table/data-table.component';
-import { SortService } from '../sort.service';
+import { DataTableComponent } from './data-table.component';
+import { SortService } from '../services/sort.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({

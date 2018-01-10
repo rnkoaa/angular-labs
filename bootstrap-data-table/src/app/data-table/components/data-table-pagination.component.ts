@@ -15,12 +15,11 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { PageNumber } from './page-number';
+import { PageNumber } from '../models/page-number';
 
 @Component({
   selector: 'app-data-table-pagination',
-  templateUrl: './data-table-pagination.component.html',
-  styleUrls: ['./data-table-pagination.component.css']
+  templateUrl: './data-table-pagination.component.html'
 })
 export class DataTablePaginationComponent implements OnInit, OnChanges {
   @Input() offset = 0;

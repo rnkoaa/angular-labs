@@ -1,7 +1,7 @@
-import { ColumnDefinition } from './data-table/column-definition';
+import { ColumnDefinition } from './data-table/models/column-definition';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TableOptions } from './data-table/table-options';
-import { TableConfig } from './data-table/table-config';
+import { TableOptions } from './data-table/models/table-options';
+import { TableConfig } from './data-table/models/table-config';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 

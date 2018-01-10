@@ -1,17 +1,17 @@
 import { GithubService, GithubResponse } from './github.service';
-import { ColumnDefinition } from '../data-table/column-definition';
-import { DataTableComponent } from '../data-table/data-table/data-table.component';
+import { ColumnDefinition } from '../data-table/models/column-definition';
+import { DataTableComponent } from '../data-table/components/data-table.component';
 import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { TableOptions } from '../data-table/table-options';
-import { TableConfig } from '../data-table/table-config';
+import { TableOptions } from '../data-table/models/table-options';
+import { TableConfig } from '../data-table/models/table-config';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import * as persons from './persons.json';
 
 import 'rxjs/add/observable/of';
-import { PageChangeEvent, PageChangeType } from '../data-table/page-change-event';
-import { TableOptionsService } from '../data-table/data-table/table-options.service';
+import { PageChangeEvent, PageChangeType } from '../data-table/models/page-change-event';
+import { DataTableResourceService } from '../data-table/services/data-table-resource.service';
 
 @Component({
   selector: 'app-remote',
@@ -25,7 +25,7 @@ export class RemoteComponent implements OnInit, AfterViewInit {
   @ViewChild(DataTableComponent) dataTableComponent: DataTableComponent;
 
   constructor(private githubService: GithubService,
-    private tableOptionsService: TableOptionsService) {
+    private tableResourceService: DataTableResourceService) {
   }
 
   public ngOnInit(): void {
@@ -50,7 +50,7 @@ export class RemoteComponent implements OnInit, AfterViewInit {
             totalCount: res.total
           }
         };
-        this.tableOptionsService.updateOptions(options);
+        this.tableResourceService.updateOptions(options);
       });
   }
 
@@ -79,7 +79,7 @@ export class RemoteComponent implements OnInit, AfterViewInit {
             totalCount: res.total
           }
         };
-        this.tableOptionsService.updateOptions(options);
+        this.tableResourceService.updateOptions(options);
       });
   }
 }

@@ -20,7 +20,6 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -29,7 +28,6 @@ import { FuseSearchService } from '../services/fuse-search.service';
 import { SortService } from '../services/sort.service';
 import { TableOptions } from '../models/table-options';
 import { DataTableSearchService } from '../services/data-table-search.service';
-import { ItemPerPageComponent } from './item-per-page.component';
 import { ItemsPerPageService } from '../services/items-per-page.service';
 import { PageChangeEvent, PageChangeType } from '../models/page-change-event';
 import { DataTablePaginationComponent } from './data-table-pagination.component';
@@ -111,7 +109,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
   constructor(private sortService: SortService,
     private itemsPerPageService: ItemsPerPageService,
     private datatableSearchService: DataTableSearchService,
-    private modalService: NgbModal,
     private tableResourceService: DataTableResourceService,
     private fuseSearchService: FuseSearchService,
     private cd: ChangeDetectorRef) {
@@ -245,12 +242,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
       this.itemCount = this.options.config.totalCount;
       this.cd.markForCheck();
     }
-  }
-
-  // open the items per page modal window.
-  changeItemsPerPage($event) {
-    const modalRef = this.modalService.open(ItemPerPageComponent);
-    modalRef.componentInstance.itemsPerPage = this.limit;
   }
 
   toggleRowExpansion(row: any, rowNum: number) {

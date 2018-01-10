@@ -1,6 +1,5 @@
 import { GithubService } from './remote/github.service';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -28,7 +27,6 @@ export const ROUTES: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    NgbModule.forRoot(),
     DataTableModule,
   ],
   providers: [

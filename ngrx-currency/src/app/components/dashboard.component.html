@@ -49,16 +49,15 @@
     <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
       <h1>Dashboard</h1>
 
-      <p *ngFor="let currency of (currencyRates$ | async)">
+      <!-- <p *ngFor="let currency of (currencyRates$ | async)">
         {{currency.code + ' ' + currency.value}}
-      </p>
-      <!-- <input [ngModel]='amount$ | async' (ngModelChange)="onAmountChange($event)">
-
+      </p> -->
+      <input [ngModel]='amount$ | async' (ngModelChange)="onAmountChange($event)">
+      <p>Selected Amount {{ amount$ | async }}</p>
       <p *ngFor="let currency of (currencyRates$ | async)">
         {{currency.code + ' ' + currency.value * (amount$ | async)}}
       </p>
 
-      <p>Current Amount: {{ amount$ | async }}</p> -->
     </main>
   </div>
 </div>

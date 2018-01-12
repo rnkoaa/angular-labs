@@ -18,34 +18,23 @@ export class DashboardComponent implements OnInit {
   public currencyRates$: Observable<Currency[]>;
 
   constructor(private store: Store<fromRoot.CurrencyState>) {
-    // this.amount$ = this.store.select(state => state.amount);
-    // this.amount$ = this.store.select(fromRoot.getAmountState);
     this.currencyRates$ = this.store.select(fromRoot.getCurrencies);
+    this.amount$ = this.store.select(fromRoot.getAmount);
 
   }
 
   ngOnInit() {
-    this.currencyRates$.subscribe(currencies => {
-      console.log(currencies);
-    });
+    // this.currencyRates$.subscribe(currencies => {
+    //   console.log(currencies);
+    // });
     this.store.dispatch(new fromActions.CurrencyUpdateAction());
-
-    // this.amount$.subscribe
-    // this.amount$.subscribe(state => {
-    //   console.log(JSON.stringify(state));
-    // });
-    // this.store.dispatch(new fromActions.CurrencyUpdateAction());
-
-    // this.currencyRates$.subscribe(data => {
-    //   console.log(data);
-    // });
   }
 
   onAmountChange(amount: string) {
-    // const number = parseFloat(amount);
-    // if (!isNaN(number)) {
-    //   this.store.dispatch(new fromActions.AmountChanged(number));
-    // }
+    const number = parseFloat(amount);
+    if (!isNaN(number)) {
+      this.store.dispatch(new fromActions.AmountChanged(number));
+    }
   }
 
 }

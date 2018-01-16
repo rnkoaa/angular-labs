@@ -11,7 +11,7 @@ const paginate = (array, page_size, page_number) => {
 
 /* GET all. */
 router.get('/', function (req, res, next) {
-  files.readFile('./assets/kbastani.github.full.json')
+  files.readFile('./assets/db.json')
     .then(fileContent => {
       res.set({
         'Content-Type': 'application/json',
@@ -31,15 +31,15 @@ router.get('/repos', function (req, res, next) {
   const sort = req.query.sort || 'name';
 
   // res.render('index', { title: 'Express' });
-  files.readFile('./assets/kbastani.github.full.json')
+  files.readFile('./assets/db.json')
     .then(fileContent => {
       let json = JSON.parse(fileContent);
       json = _.orderBy(json, [sort], [direction]);
-      
+
       res.set({
         'Content-Type': 'application/json',
       });
-      
+
       const pagedItem = paginate(json, per_page, page);
 
       const resp = {};
@@ -56,7 +56,7 @@ router.get('/repos', function (req, res, next) {
       resp.next = parseInt(page) + 1;
       resp.total = json.length;
 
-     
+
 
       res.json(resp);
 

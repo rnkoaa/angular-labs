@@ -1,8 +1,0 @@
-table {
-  width: 100%;
-}
-
-th[sortable-column] {
-  text-align: left;
-  cursor: pointer;
-}

@@ -1,0 +1,48 @@
+<nav class="float-right">
+  <ul class="pagination">
+    <li (click)="selectPage(1, $event)" [class.disabled]="currentPage <= 1 " class="page-item">
+      <a href="#" class="page-link" title="Go to first page" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li (click)="selectPage(currentPage - 1, $event)" [class.disabled]="currentPage == 1"
+      class="page-item">
+      <a href="" class="page-link" title="Go to previous page">&lsaquo;</a>
+    </li>
+    <!-- Display shortcut to the first page -->
+    <li class="page-item" (click)="selectPage(1, $event)" *ngIf="currentPage > (range + 1)">
+      <a href="" class="page-link"> 1 </a>
+    </li>
+    <li class="disabled page-item" (click)="cancelEvent($event)" *ngIf="(currentPage - range) > 2">
+      <a href="" class="page-link">...</a>
+    </li>
+    <li *ngFor="let page of pages | async" [class.active]="page.value == currentPage"
+      class="page-item">
+      <a href="" class="page-link" (click)="selectPage(page.value, $event)">
+        {{page.value}}
+      </a>
+    </li>
+    <li class="disabled" (click)="cancelEvent($event)" *ngIf="(currentPage + range) < (totalPages - 1)"
+      class="page-item">
+      <a href="" class="page-link">...</a>
+    </li>
+
+    <!-- display short cut to last page -->
+    <li class="page-item" (click)="selectPage(totalPages, $event)" *ngIf="(currentPage + range) < totalPages">
+      <a href="" class="page-link"> {{ totalPages }} </a>
+    </li>
+
+    <li (click)="selectPage(currentPage + 1, $event)" [class.disabled]="currentPage >= totalPages"
+      class="page-item">
+      <a href="" title="Go to next page" class="page-link">
+        <span aria-hidden="true" aria-label="Next">&rsaquo;</span>
+      </a>
+    </li>
+    <li (click)="selectPage(totalPages, $event)" [class.disabled]="currentPage >= totalPages"
+      class="page-item">
+      <a href="" title="Go to last page" class="page-link">
+        <span aria-hidden="true" aria-label="Last">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

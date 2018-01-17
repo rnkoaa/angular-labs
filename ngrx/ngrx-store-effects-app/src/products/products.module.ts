@@ -25,15 +25,18 @@ export const ROUTES: Routes = [
   {
     path: '',
     canActivate: [fromGuards.PizzasGuard],
+    data: { title: 'Products' },
     component: fromContainers.ProductsComponent
   },
   {
     path: 'new',
+    data: { title: 'Create A New Product' },
     canActivate: [fromGuards.PizzasGuard, fromGuards.ToppingsGuard],
     component: fromContainers.ProductItemComponent
   },
   {
     path: ':pizzaId',
+    data: { title: 'Get This Product' },
     canActivate: [fromGuards.PizzaExistsGuard, fromGuards.ToppingsGuard],
     component: fromContainers.ProductItemComponent
   }

@@ -1,14 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+
 import { Actions, Effect } from '@ngrx/effects';
+import { ROUTER_NAVIGATION, RouterNavigationAction } from '@ngrx/router-store';
 
 import * as RouterActions from '../actions/router.actions';
+import * as fromReducers from '../reducers';
 
 import { tap, map } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
 @Injectable()
 export class RouterEffects {
+
+  @Effect({ dispatch: false })
+  updateTitle$ = this.actions$
+    .ofType(ROUTER_NAVIGATION).pipe(
+      tap((action: RouterNavigationAction<fromReducers.RouterStateUrl>) => {
+        if(action && action.payload.routerState.title){
+          this.titleService.setTitle(action.payload.routerState.title);
+        }
+      })
+    );
+
+
   @Effect({ dispatch: false })
   navigate$ = this.actions$.ofType(RouterActions.GO).pipe(
     map((action: RouterActions.Go) => action.payload),
@@ -34,6 +50,7 @@ export class RouterEffects {
   constructor(
     private actions$: Actions,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 }

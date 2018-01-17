@@ -11,6 +11,7 @@ export interface RouterStateUrl {
   url: string;
   queryParams: Params;
   params: Params;
+  title?: string;
 }
 
 export interface State {
@@ -42,6 +43,9 @@ export class CustomSerializer
     // same as below
     const { params } = state;
 
-    return { url, queryParams, params };
+    // Use the most specific title
+    const title = state.data['title'];
+
+    return { url, queryParams, params, title };
   }
 }

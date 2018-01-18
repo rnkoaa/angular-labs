@@ -54,7 +54,6 @@ export function reducer(
 
     case fromPizzas.LOAD_PIZZAS_SUCCESS: {
       const pizzas = action.payload;
-
       return pizzaAdapter.addAll(pizzas, {
         ...state,
         loading: false,

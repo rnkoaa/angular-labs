@@ -27,6 +27,7 @@ export class PizzasGuard implements CanActivate {
     return this.store.select(fromStore.getPizzasLoaded).pipe(
       tap((loaded: boolean) => {
         if (!loaded) {
+          console.log('Not Loaded')
           this.store.dispatch(new fromStore.LoadPizzas());
         }
       }),

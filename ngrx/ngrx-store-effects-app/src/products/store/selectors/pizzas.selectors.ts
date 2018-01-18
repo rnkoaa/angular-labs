@@ -36,6 +36,7 @@ export const getPizzaVisualized = createSelector(
 );
 
 export const getAllPizzas = createSelector(getPizzasEntities, entities => {
+  console.log(Object.keys(entities))
   return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
 });
 

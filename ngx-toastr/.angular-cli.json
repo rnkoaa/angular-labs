@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "ngx-toastr"
+    "name": "ngx-toastr-demo"
   },
   "apps": [
     {
@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+         "../node_modules/ngx-toastr/toastr.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from "../services";
 
 
 @Component({
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() {
+  constructor(private notificationService: NotificationService) {
 
   }
 
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
   toast(event) {
     console.log('Toast Clicked');
+    this.notificationService.success("Hello World")
   }
 
 }

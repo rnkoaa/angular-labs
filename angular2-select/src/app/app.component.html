@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg"
+      alt="" width="72" height="72">
+    <h2>Checkout form</h2>
+    <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each
+      required form group has a validation state that can be triggered by attempting
+      to submit the form without completing it.</p>
+  </div>
+  <div>Menu Open {{ status.isopen }}</div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <div class="md-select" dropdown [isOpen]="status.isopen" placement="top">
+        <span class="selection-container">
+          <span class="selection">
+              <span class="selection-in-container" role="combobox" aria-haspopup="true"
+              aria-expanded="false" tabindex="0" aria-labelledby="selection-textbox">
+                <span class="selection-textbox" id="selection-textbox" role="textbox" aria-readonly="true" title="Option 1">
+                  Option 1
+                </span>
+                <span class="selection-display-arrow" id="selection-display-arrow">
+                  <b></b>
+                </span>
+              </span>
+          </span>
+        </span>
+        <!-- <input type="text" appInputFocus class="form-control" id="select-input"
+          placeholder="" value="" required> -->
+        <!-- <span class="form-control select-option" role="textbox" aria-readonly="true" id="select-container">
+          Option 1
+        </span>
+        <span>
+          <i class="fa fa-angle-down float-right select-container-arrow" appInputFocus></i>
+        </span>
+
+        <div class="select-dropdown-menu" role="menu" aria-labelledby="select-container">
+          <button class="dropdown-item">Action - 1</button>
+          <button class="dropdown-item">Another Action</button>
+          <button class="dropdown-item">Something else is here</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+
+</div>

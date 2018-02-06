@@ -1,0 +1,116 @@
+.md-select {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.28571429rem;
+  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;
+  transition: box-shadow 0.1s ease, width 0.1s ease;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: none;
+}
+
+.select-open {
+  background-clip: padding-box;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+#select-container {
+  margin-left: 0px;
+  display: inline;
+  border: 0px;
+  border-radius: 0.25rem 0 0 0.25rem;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.select-container-arrow {
+  margin-top: 10px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.select-dropdown-menu {
+  position: relative;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.select-dropdown-menu-open {
+  display: block;
+}
+
+.select-container {
+  color: #3e515b;
+  padding: 0;
+  display: block;
+  padding-left: 8px;
+  padding-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: calc(2.0625rem + 2px);
+  line-height: 1.5;
+  padding: 0.375rem 1.65rem 0.375rem 0.75rem;
+}
+
+/** Selection Container implementation*/
+.selection-container {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  background-color: #fff;
+  color: #3e515b;
+  font-size: 0.875rem;
+  border-radius: 0;
+  outline: 0;
+}
+
+.select-container .selection {
+  height: calc(2.0625rem + 2px);
+  line-height: 1.5;
+  padding: 0.375rem 1.65rem 0.375rem 0.75rem;
+}
+
+.selection-in-container {
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  /* border-color: #8ad4ee; */
+}
+
+.selection-container .selection-textbox {
+  color: #3e515b;
+  padding: 0;
+  display: inline-block;
+  width: 90%;
+  line-height: 1.5;
+  padding: 0.375rem 1.65rem 0.375rem 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: calc(2.0625rem + 2px);
+  cursor: pointer;
+}
+
+.selection-container .selection-display-arrow {
+  width: 5%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.selection-container .selection-display-arrow > b {
+  border-color: #9faecb transparent transparent;
+  border-style: solid;
+  border-width: .3rem .3rem 0;
+  height: 0;
+  left: 0;
+  font-weight: bolder;
+  margin-left: -.3rem;
+  margin-top: -.15rem;
+  position: absolute;
+  top: 50%;
+  width: 0;
+  cursor: pointer;
+}
